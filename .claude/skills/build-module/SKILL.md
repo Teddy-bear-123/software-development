@@ -44,8 +44,9 @@ context.
      time in Session 1 for a hands-on role-play, so intro + demo only is
      fine (see "Exception: module 1" under CLAUDE.md's "Module README
      conventions"). Its concepts get practiced implicitly through every
-     other module's exercises, and maintainer/reviewer roles get discussed
-     and fixed at the Day 1 tag-up (Session 5 1/3), then applied during
+     other module's exercises, and developer/reviewer/maintainer roles
+     (mapped to real GitHub permission levels: Write/Triage/Maintain) get
+     discussed and fixed at the Day 1 tag-up (Session 5 1/3), then applied during
      the Day 2 merge session — not role-played in module 1.
 
 4. **Flag adaptation decisions and open questions inline** as you draft

@@ -57,8 +57,8 @@ Four sessions across 1.5 days (3h + 3h + 4h):
 - 15:45–16:45 Session 4 (2/2) — Testing (PyTest)
 - 16:45–17:45 Session 5 (1/3) — Data challenge intro, team formation,
   tag-up: assign backlog tasks **and discuss and fix roles
-  (maintainer/reviewer) and workflow conventions** for the merge session,
-  before evening work starts
+  (developer/reviewer/maintainer) and workflow conventions** for the
+  merge session, before evening work starts
 
 **Day 2**
 - 9:00–11:15 Session 5 (2/3) — Data challenge workshop: apply the roles
@@ -78,7 +78,7 @@ against the backlog assigned at the end of Session 5 (1/3):
 
 - **Day 1, Session 5 (1/3), 16:45–17:45 — tag-up**: assign backlog tasks,
   and, critically, **discuss and fix the roles and workflow conventions
-  here** (who is maintainer/reviewer, branching/PR conventions, how
+  here** (who is developer/reviewer/maintainer, branching/PR conventions, how
   conflicts will get resolved) — this is decided as a group before anyone
   starts implementing, not improvised on Day 2.
 - **Optional, non-mandatory evening work** (Day 1 evening, unscheduled):
@@ -121,13 +121,15 @@ drafting the backlog, not just for total time budget.
 Cross-reference: there's no time in Session 1 (60 min) for a hands-on
 role-play exercise like `inputs/gitlab`'s maintainer/developer/reporter
 setup — module 1 teaches commit/branch/issue/PR/review as concepts +
-live demo only. The maintainer/reviewer roles and the team's actual
-workflow get **discussed and fixed at the Day 1 tag-up (Session 5 1/3)**,
+live demo only. The developer/reviewer/maintainer roles and the team's
+actual workflow get **discussed and fixed at the Day 1 tag-up (Session 5 1/3)**,
 then **applied** during the Day 2 merge session — not role-played inside
-module 1 itself. Module 1 should still explain what those roles mean so
-tag-up isn't introducing new vocabulary under time pressure; it just
-doesn't run the role-play itself — the data challenge (tag-up decides
-roles/workflow, evening implementation, Day 2 merge) is the role-play.
+module 1 itself. Module 1 does still explain the three roles, mapped to
+GitHub's actual permission levels (developer=Write, reviewer=Triage,
+maintainer=Maintain — not a simplification, the real levels) so tag-up
+isn't introducing new vocabulary under time pressure; it just doesn't run
+the role-play itself — the data challenge (tag-up decides roles/workflow,
+evening implementation, Day 2 merge) is the role-play.
 
 ## Team structure (data challenge workshop)
 
@@ -142,8 +144,8 @@ independent, parallelizable tasks (GitHub Issues) spanning all of modules
 spec", "add a GitHub Actions test workflow", "write docstrings + doctest
 for module X", "add PyTest coverage for module Y", "add a Docker image +
 GHCR push", "implement data-challenge feature Z". Teams claim tasks at the
-Day 1 tag-up (Session 5 1/3), where roles (maintainer/reviewer) and
-workflow conventions also get discussed and fixed for the group — then
+Day 1 tag-up (Session 5 1/3), where roles (developer/reviewer/maintainer)
+and workflow conventions also get discussed and fixed for the group — then
 fork, implement, and open a PR on their own during the optional Day 1
 evening slot (see "Evening work & the Day 2 workshop" above), following
 that agreed workflow. The Day 2 morning session is integration, not more
@@ -199,10 +201,10 @@ Each module README (`N-topic/README.md`) has three parts, in order:
 exercise (see "Cross-reference" above), so `1-software-development-basics`
 doesn't need its own backlog-style exercises the way modules 2-4 do — its
 mechanics (commit, branch, issue, PR, review) get practiced implicitly
-through every other module's exercises, and the maintainer/reviewer roles
-specifically get discussed and fixed at the Day 1 tag-up (Session 5 1/3)
-and then applied during the Day 2 merge session. Intro + demo only for
-module 1 is fine.
+through every other module's exercises, and the developer/reviewer/
+maintainer roles specifically get discussed and fixed at the Day 1
+tag-up (Session 5 1/3) and then applied during the Day 2 merge session.
+Intro + demo only for module 1 is fine.
 
 ## Tooling decisions already made
 
