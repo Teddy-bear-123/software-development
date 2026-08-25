@@ -16,16 +16,19 @@ experience assumed. Format: Python-only (no C++ track).
 - `3-workflow-control/` — Session 3: reproducible workflows & CI/CD basics.
 - `4-documentation-testing/` — Session 4: docstrings/Markdown docs + PyTest.
 - `5-data-challenge/` — Session 5: the data challenge workshop (capstone).
+  **Teaching content only** (intro slides, schedule, exercise/backlog
+  descriptions) — not the codebase itself.
 - `inputs/` — **read-only reference material** from past editions of related
   trainings (separate nested git repos, gitignored, never committed here).
   Each module is *adapted from* one or more of these, not copied verbatim —
   see the mapping table below. Do not edit files under `inputs/`.
-
-The data challenge itself (the shared codebase students fork/branch/PR
-against) lives in **a separate GitHub repo**, not in this repo — students
-need real Issues/PRs/Actions/Pages/GHCR, which only works against an actual
-GitHub repo. This repo keeps a seed/template copy of its starting content
-under `5-data-challenge/` and documents how to stand the real repo up from it.
+- `data-challenge/` — **the actual data-challenge codebase**, a separate
+  GitHub repo (`git@github.com:jzoubian/software-development_data-challenge.git`),
+  cloned locally as a nested git repo (gitignored, never committed into this
+  repo — same treatment as `inputs/`). Students need real Issues/PRs/
+  Actions/Pages/GHCR against it, which only works against an actual GitHub
+  repo. Commits/pushes to it are made from inside `data-challenge/` itself,
+  against its own remote — not part of this repo's git history.
 
 ## Working process
 
@@ -169,7 +172,7 @@ throughout and must be translated.
 | `2-environment-control` | `conda/`, `apptainer/` | Conda/Miniforge material ports mostly as-is (already recommends Miniforge over Anaconda). Apptainer → Docker for the CI/CD half; keep Miniforge (not Apptainer) for the local dev-env half. Keep the reproducibility-vs-replicability framing (Konrad Hinsen) and the closing comparison table; keep brief Guix/Nix mention as the "bitwise exact" extreme, but the focus is industry-standard tooling (Conda/Miniforge, Docker), not Guix/Nix. `conda/ex2-4.md` are empty stubs from the original — only `ex1` has real content; the new exercises for this module live in the Session 5 backlog per the schedule note above, not as standalone ex-files. |
 | `3-workflow-control` | `workflow/` (thin — mostly notebook-workflow best practices, not pipelines), `eurolabs-os-school/03_snakemake_intro.pdf` (Snakemake, not yet unpacked into hands-on material) | Reframe around **GitHub Actions** CI/CD + **pixi** for the dev environment (pixi isn't industry-standard yet, but worth surfacing as good practice). Mention scripts-with-version-control, Snakemake, DVC only briefly as the broader landscape — don't build deep hands-on content for them. Reuse: the devcontainer+miniforge pattern already in `workflow/.devcontainer/devcontainer.json`, and the notebook version-control best practices (clear outputs before commit, etc.) if notebooks come up at all. GitHub Actions content itself has no precedent in `inputs/` — build fresh. |
 | `4-documentation-testing` | `doc/`, `testing/` (Python-only parts: `part-2-simple-ut-particle/python/`, `part-3-cache-mock/python/`) | Docs half ports mostly as-is: docstrings → doctest → API docs (Sphinx/pdoc/mkdocstrings), README essentials. Testing half: reuse the Particle/physics unit-test exercise and the Cache/mock exercise (manual mock + `unittest.mock`); **drop** `part-1-malt-bug` (C/autotools-specific bug hunt) and all C++ mirrors — Python-only per course decision. |
-| `5-data-challenge` | `eurolabs-os-school/hands-on-2024/` (worked, 39-commit history — best template for how the capstone *plays out*: numbered-issue branches, incremental CI setup, MRs into main), `eurolabs-os-school/hands-on-2026/` (fresh starting-point template) | No exact "2023 edition" data-challenge repo was found under `inputs/`; the closest precedents are the 2024/2026 `project-zero` hands-on repos (C++/ROOT physics analysis). **Open question for the user**: confirm whether a 2023-edition data-challenge repo exists elsewhere (not under `inputs/`), or whether `hands-on-2024`/`hands-on-2026` are in fact what was meant — and decide the data challenge's own domain/dataset, since `project-zero` is C++/ROOT-specific and this course is Python-only. |
+| `5-data-challenge` | `eurolabs-os-school/hands-on-2024/` (worked, 39-commit history — best template for how the capstone *plays out*: numbered-issue branches, incremental CI setup, MRs into main), `eurolabs-os-school/hands-on-2026/` (fresh starting-point template, structure only) | **Domain decided**: no exact "2023 edition" repo was ever found under `inputs/`, so `project-zero` (C++/ROOT physics analysis) is used for *structure only* (bare "day zero" starting point, no CI/tests/docs yet). The actual domain is a tiny **astro-image pipeline** (load → stack/denoise → detect sources → basic photometry → false-color composite), Python-only, synthetic seeded star-field data for dev/tests. The "real astro image" payoff comes from a **bonus, stubbed `astrolab.realdata.fetch_sky_image`** that queries a public sky-survey archive live via `astroquery` (SkyView/DSS, confirmed working — e.g. `SkyView.get_images(position="M42", survey=["DSS"], pixels=200)`) rather than bundling a downloaded image, which sidesteps licensing entirely and doubles as a live example of the reproducibility-vs-network-dependency tradeoff for modules 2/3. Chosen to fit a data-science-specialization audience with an astrophysics/data-science instructor, per the user. Codebase lives in `data-challenge/` (see "Repo layout"), not under `inputs/` or `5-data-challenge/`. |
 
 ## Module README conventions
 
