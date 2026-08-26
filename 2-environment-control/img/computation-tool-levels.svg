@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 740" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <marker id="arrowUp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0L10,5L0,10z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="760" height="740" fill="#ffffff"/>
+
+  <rect x="40" y="30" width="320" height="55" rx="8" fill="#f5f5f5" stroke="#333" stroke-width="1.5"/>
+  <text x="200" y="63" text-anchor="middle" font-size="14" fill="#111">Result</text>
+
+  <line x1="200" y1="110" x2="200" y2="85" stroke="#333" stroke-width="2" marker-end="url(#arrowUp)"/>
+  <text x="375" y="102" font-size="11" fill="#777">computer + data</text>
+
+  <rect x="40" y="110" width="320" height="55" rx="8" fill="#f5f5f5" stroke="#333" stroke-width="1.5"/>
+  <text x="200" y="143" text-anchor="middle" font-size="14" fill="#111">Program</text>
+
+  <line x1="200" y1="190" x2="200" y2="165" stroke="#333" stroke-width="2" marker-end="url(#arrowUp)"/>
+  <text x="375" y="182" font-size="11" fill="#777">compiler + source code</text>
+
+  <rect x="40" y="190" width="320" height="55" rx="8" fill="#f5f5f5" stroke="#333" stroke-width="1.5"/>
+  <text x="200" y="223" text-anchor="middle" font-size="14" fill="#111">Environment</text>
+
+  <line x1="68" y1="280" x2="196" y2="247" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="134" y1="280" x2="198" y2="247" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="200" y1="280" x2="200" y2="247" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="266" y1="280" x2="202" y2="247" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="332" y1="280" x2="204" y2="247" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <text x="375" y="262" font-size="11" fill="#777">package manager + prior env</text>
+
+  <rect x="40" y="280" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="68" y="302" text-anchor="middle" font-size="9" fill="#555">pkg</text>
+  <rect x="106" y="280" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="134" y="302" text-anchor="middle" font-size="9" fill="#555">pkg</text>
+  <rect x="172" y="280" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="200" y="302" text-anchor="middle" font-size="9" fill="#555">pkg</text>
+  <rect x="238" y="280" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="266" y="302" text-anchor="middle" font-size="9" fill="#555">pkg</text>
+  <rect x="304" y="280" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="332" y="302" text-anchor="middle" font-size="9" fill="#555">pkg</text>
+
+  <line x1="68" y1="360" x2="68" y2="317" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="134" y1="360" x2="134" y2="317" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="200" y1="360" x2="200" y2="317" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="266" y1="360" x2="266" y2="317" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <line x1="332" y1="360" x2="332" y2="317" stroke="#333" stroke-width="1.5" marker-end="url(#arrowUp)"/>
+  <text x="375" y="342" font-size="11" fill="#777">build system + build env</text>
+
+  <rect x="40" y="360" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="68" y="382" text-anchor="middle" font-size="9" fill="#555">src</text>
+  <rect x="106" y="360" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="134" y="382" text-anchor="middle" font-size="9" fill="#555">src</text>
+  <rect x="172" y="360" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="200" y="382" text-anchor="middle" font-size="9" fill="#555">src</text>
+  <rect x="238" y="360" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="266" y="382" text-anchor="middle" font-size="9" fill="#555">src</text>
+  <rect x="304" y="360" width="56" height="36" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="332" y="382" text-anchor="middle" font-size="9" fill="#555">src</text>
+
+  <rect x="570" y="190" width="12" height="135" rx="6" fill="#3498db"/>
+  <rect x="590" y="110" width="12" height="135" rx="6" fill="#9b59b6"/>
+  <rect x="610" y="110" width="12" height="295" rx="6" fill="#27ae60"/>
+
+  <rect x="40" y="432" width="14" height="14" fill="#3498db"/>
+  <text x="62" y="443" font-size="12" fill="#111">Binary package managers — conda, apt, dnf, ...</text>
+  <text x="62" y="460" font-size="11" fill="#777">Covers: package → environment</text>
+  <text x="62" y="477" font-size="11" fill="#777">Isolation: weak — shares the host, undeclared deps stay silent</text>
+  <text x="62" y="494" font-size="11" fill="#777">CI: works, but slower/less deterministic than a lock file</text>
+  <text x="62" y="511" font-size="11" fill="#777">Best for: day-to-day dev, fast iteration</text>
+
+  <rect x="40" y="532" width="14" height="14" fill="#9b59b6"/>
+  <text x="62" y="543" font-size="12" fill="#111">Containers — Docker, Apptainer, repro, ...</text>
+  <text x="62" y="560" font-size="11" fill="#777">Covers: environment + program, frozen as one unit</text>
+  <text x="62" y="577" font-size="11" fill="#777">Isolation: strong — undeclared host deps fail loudly</text>
+  <text x="62" y="594" font-size="11" fill="#777">CI: native — GitHub Actions runs jobs in containers, pushes to GHCR</text>
+  <text x="62" y="611" font-size="11" fill="#777">Best for: deployment, CI, sharing a working setup</text>
+
+  <rect x="40" y="632" width="14" height="14" fill="#27ae60"/>
+  <text x="62" y="643" font-size="12" fill="#111">Guix / Nix</text>
+  <text x="62" y="660" font-size="11" fill="#777">Covers: package source through program, from source</text>
+  <text x="62" y="677" font-size="11" fill="#777">Isolation: strongest — sandboxed, network-isolated builds</text>
+  <text x="62" y="694" font-size="11" fill="#777">CI: niche — no first-class GitHub Actions support</text>
+  <text x="62" y="711" font-size="11" fill="#777">Best for: publication-grade, byte-for-byte reproducibility</text>
+</svg>
