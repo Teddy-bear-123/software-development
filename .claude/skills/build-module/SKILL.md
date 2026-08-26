@@ -1,6 +1,6 @@
 ---
 name: build-module
-description: Draft or revise one course module README (1-software-development-basics, 2-environment-control, 3-workflow-control, 4-documentation-testing, or 5-data-challenge) for the Git/GitHub/CI-CD course. Use whenever the user asks to work on "the next module", "module N", or a session README, or references the course TODO list.
+description: Draft or revise one course module README (1-software-development-basics, 2-environment-control, 3-documentation-testing, 4-workflow-control, or 5-data-challenge) for the Git/GitHub/CI-CD course. Use whenever the user asks to work on "the next module", "module N", or a session README, or references the course TODO list.
 ---
 
 # Build a course module

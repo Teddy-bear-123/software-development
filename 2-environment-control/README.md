@@ -118,7 +118,7 @@ each buys a different amount of reproducibility for a different cost:
   container's isolation is exactly why it's also the default choice for
   running untrusted code in CI.
 * Docker is also the natural fit for *this course's* CI workflow —
-  Session 3 automates this exact build with GitHub Actions and pushes
+  Session 4 automates this exact build with GitHub Actions and pushes
   the result to GHCR, so it's very likely the tool you'll actually touch
   again this week.
 
@@ -209,7 +209,7 @@ docker run --rm astrolab
 
 Pushing this image to a registry (GitHub Container Registry) so it's
 built once and reused everywhere — including automatically, on every
-push — is where this picks back up in Session 3 (GitHub Actions).
+push — is where this picks back up in Session 4 (GitHub Actions).
 
 ## Demo
 
