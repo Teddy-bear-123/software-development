@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0L10,5L0,10z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="800" height="430" fill="#ffffff"/>
+
+  <text x="400" y="24" text-anchor="middle" font-size="16" fill="#333">Manual software delivery — no CI/CD</text>
+
+  <!-- Row 1 -->
+  <rect x="30" y="50" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#e67e22" stroke-width="2"/>
+  <circle cx="44" cy="64" r="5" fill="#e67e22"/>
+  <text x="105" y="84" text-anchor="middle" font-size="12" fill="#111">Code on my</text>
+  <text x="105" y="100" text-anchor="middle" font-size="12" fill="#111">laptop</text>
+
+  <rect x="215" y="50" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#e67e22" stroke-width="2"/>
+  <circle cx="229" cy="64" r="5" fill="#e67e22"/>
+  <text x="290" y="84" text-anchor="middle" font-size="12" fill="#111">Tests pass on</text>
+  <text x="290" y="100" text-anchor="middle" font-size="12" fill="#111">my laptop</text>
+
+  <rect x="400" y="50" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#e67e22" stroke-width="2"/>
+  <circle cx="414" cy="64" r="5" fill="#e67e22"/>
+  <text x="475" y="84" text-anchor="middle" font-size="12" fill="#111">Merge my</text>
+  <text x="475" y="100" text-anchor="middle" font-size="12" fill="#111">branch</text>
+
+  <rect x="585" y="50" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#7f8c8d" stroke-width="2"/>
+  <circle cx="599" cy="64" r="5" fill="#7f8c8d"/>
+  <text x="660" y="84" text-anchor="middle" font-size="12" fill="#111">Manual deploy</text>
+  <text x="660" y="100" text-anchor="middle" font-size="12" fill="#111">on prod</text>
+
+  <line x1="180" y1="87" x2="215" y2="87" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="365" y1="87" x2="400" y2="87" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="550" y1="87" x2="585" y2="87" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+
+  <line x1="660" y1="124" x2="660" y2="280" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+
+  <!-- Row 2 -->
+  <rect x="585" y="280" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#9b59b6" stroke-width="2"/>
+  <circle cx="599" cy="294" r="5" fill="#9b59b6"/>
+  <text x="660" y="314" text-anchor="middle" font-size="12" fill="#111">"Works on my</text>
+  <text x="660" y="330" text-anchor="middle" font-size="12" fill="#111">laptop" ≠ prod</text>
+
+  <rect x="400" y="280" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#9b59b6" stroke-width="2"/>
+  <circle cx="414" cy="294" r="5" fill="#9b59b6"/>
+  <text x="475" y="322" text-anchor="middle" font-size="12" fill="#111">Prod breaks</text>
+
+  <rect x="215" y="280" width="150" height="74" rx="8" fill="#f5f5f5" stroke="#9b59b6" stroke-width="2"/>
+  <circle cx="229" cy="294" r="5" fill="#9b59b6"/>
+  <text x="290" y="322" text-anchor="middle" font-size="12" fill="#111">rollback failed</text>
+
+  <rect x="30" y="280" width="150" height="74" rx="8" fill="#fceae8" stroke="#c0392b" stroke-width="2.5"/>
+  <circle cx="44" cy="294" r="5" fill="#c0392b"/>
+  <text x="105" y="314" text-anchor="middle" font-size="12" font-weight="bold" fill="#111">3AM PAGE —</text>
+  <text x="105" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#111">RAGE QUIT</text>
+
+  <line x1="585" y1="317" x2="550" y2="317" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="400" y1="317" x2="365" y2="317" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="215" y1="317" x2="180" y2="317" stroke="#333" stroke-width="2" marker-end="url(#arrow3)"/>
+
+  <!-- legend -->
+  <rect x="30" y="392" width="14" height="14" rx="2" fill="#e67e22"/>
+  <text x="52" y="404" font-size="12" fill="#111">local dev</text>
+
+  <rect x="220" y="392" width="14" height="14" rx="2" fill="#7f8c8d"/>
+  <text x="242" y="404" font-size="12" fill="#111">manual execution</text>
+
+  <rect x="440" y="392" width="14" height="14" rx="2" fill="#9b59b6"/>
+  <text x="462" y="404" font-size="12" fill="#111">problems</text>
+
+  <rect x="600" y="392" width="14" height="14" rx="2" fill="#c0392b"/>
+  <text x="622" y="404" font-size="12" fill="#111">dead end</text>
+</svg>
