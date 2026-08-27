@@ -7,3 +7,7 @@
 
 __pycache__/
 *.pyc
+
+# Images vendored into slides/img/ at deploy time by the Pages CI workflow
+# (source of truth is each module's own img/ folder) — not committed here.
+/slides/img/

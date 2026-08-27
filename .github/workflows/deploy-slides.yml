@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - "slides/**"
+      - "1-software-development-basics/img/**"
+      - "2-environment-control/img/**"
+      - "3-documentation-testing/img/**"
+      - "4-workflow-control/img/**"
       - ".github/workflows/deploy-slides.yml"
   workflow_dispatch:
 
@@ -28,11 +32,40 @@ jobs:
         with:
           submodules: true
 
+      # slides/index.html references these module illustrations at
+      # img/<module>/<file>, relative to the deploy root (slides/ itself) —
+      # copy them in here instead of duplicating the files in the repo.
+      - name: Assemble deploy site
+        run: |
+          site=_site_slides
+          cp -r slides "$site"
+          rm -rf "$site/img"
+
+          copy_img() {
+            module="$1"; shift
+            mkdir -p "$site/img/$module"
+            for f in "$@"; do
+              cp "$module/img/$f" "$site/img/$module/"
+            done
+          }
+
+          copy_img 1-software-development-basics \
+            fetch-merge-pull-push.svg git_flow_branching.png github_flow_branching.png
+          copy_img 2-environment-control \
+            computation-io.svg computation-chaotic.svg computation-data-code.svg \
+            computation-data-code-env.svg computation-tool-levels.svg
+          copy_img 3-documentation-testing \
+            malt-webview-bug.png
+          copy_img 4-workflow-control \
+            manual-devops-workflow.svg automated-devops-workflow.svg
+
+          echo "SITE_DIR=$site" >> "$GITHUB_ENV"
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: slides
+          path: ${{ env.SITE_DIR }}
 
       - id: deployment
         uses: actions/deploy-pages@v4
