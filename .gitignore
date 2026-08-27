@@ -4,3 +4,6 @@
 # The data-challenge codebase is its own GitHub repo, cloned locally as a
 # nested git repo (git@github.com:jzoubian/software-development_data-challenge.git)
 /data-challenge/
+
+__pycache__/
+*.pyc
