@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Software Development with Git, GitHub &amp; CI/CD</title>
+
+  <link rel="stylesheet" href="reveal.js/dist/reset.css" />
+  <link rel="stylesheet" href="reveal.js/dist/reveal.css" />
+  <link rel="stylesheet" href="reveal.js/dist/theme/black.css" />
+  <link rel="stylesheet" href="reveal.js/dist/plugin/highlight/monokai.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+  <style>
+    :root {
+      --accent:  #7ecfff;
+      --accent2: #ffd97d;
+      --accent3: #8aff8a;
+      --card-bg: rgba(255,255,255,0.06);
+    }
+
+    .reveal .slides section { text-align: left; }
+
+    /* ── Title / section slides ── */
+    .title-slide   { text-align: center !important; }
+    .section-slide { text-align: center !important; }
+    .title-slide h1 {
+      font-size: 1.9em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 0.2em;
+    }
+    .section-slide h2 { font-size: 2em; color: var(--accent2); }
+    .section-num { font-size: 3em; opacity: 0.15; font-weight: 900; display: block; margin-bottom: -0.3em; }
+    .title-slide .badge {
+      display: inline-block; background: var(--card-bg);
+      border: 1px solid #444; border-radius: 20px;
+      padding: 4px 16px; font-size: 0.7em; color: var(--accent); margin: 4px;
+    }
+
+    /* ── Cards ── */
+    .card-grid   { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 0.6em; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 0.6em; }
+    .card {
+      background: var(--card-bg); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px; padding: 16px 18px;
+    }
+    .card h4 { margin: 0 0 6px 0; color: var(--accent); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; }
+    .card p, .card ul, .card ol { margin: 0; font-size: 0.75em; color: #ccc; }
+    .card ul, .card ol { padding-left: 1.1em; }
+    .card ul li, .card ol li { margin-bottom: 3px; }
+    .card .icon { font-size: 1.6em; margin-bottom: 6px; display: block; }
+
+    /* ── Timeline ── */
+    .timeline { list-style: none; padding: 0; margin: 0.4em 0 0 0; }
+    .timeline li { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; font-size: 0.78em; }
+    .timeline .dot {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85em;
+    }
+    .dot-blue   { background: #1e6faa; color: #fff; }
+    .dot-gold   { background: #a07800; color: #fff; }
+    .dot-green  { background: #1a7a3a; color: #fff; }
+    .dot-red    { background: #8a1a1a; color: #fff; }
+    .dot-purple { background: #5a2080; color: #fff; }
+    .timeline .content { flex: 1; }
+    .timeline .content strong { color: var(--accent2); }
+    .timeline .content span  { color: #aaa; }
+
+    /* ── Highlight boxes ── */
+    .hl-box {
+      background: rgba(126,207,255,0.08); border-left: 3px solid var(--accent);
+      border-radius: 6px; padding: 8px 14px; font-size: 0.78em; color: #ddd; margin: 8px 0;
+    }
+    .hl-box.green { background: rgba(138,255,138,0.08); border-color: var(--accent3); }
+    .hl-box.gold  { background: rgba(255,217,125,0.08); border-color: var(--accent2); }
+    .hl-box.red   { background: rgba(255,100,100,0.08); border-color: #ff6b6b; }
+
+    /* ── Milestone banner ── */
+    .milestone {
+      background: linear-gradient(90deg, rgba(255,180,0,0.15), rgba(255,180,0,0.03));
+      border-left: 3px solid var(--accent2); border-radius: 6px;
+      padding: 8px 14px; font-size: 0.75em; color: var(--accent2); margin-top: 10px;
+    }
+    .milestone strong { color: #fff; }
+
+    /* ── Utility ── */
+    .reveal h2 { font-size: 1.4em; color: #fff; margin-bottom: 0.4em; }
+    .reveal h3 { font-size: 1.05em; color: var(--accent); margin-bottom: 0.3em; }
+    .reveal ul  { font-size: 0.82em; }
+    .reveal ul li { margin-bottom: 4px; }
+    .tag {
+      display: inline-block; background: rgba(126,207,255,0.15);
+      border: 1px solid rgba(126,207,255,0.3); border-radius: 12px;
+      padding: 2px 10px; font-size: 0.55em; color: var(--accent);
+      margin-left: 6px; vertical-align: middle;
+    }
+    .tag.gold  { background: rgba(255,217,125,0.15); border-color: rgba(255,217,125,0.4); color: var(--accent2); }
+    .tag.green { background: rgba(138,255,138,0.15); border-color: rgba(138,255,138,0.4); color: var(--accent3); }
+    .tag.red   { background: rgba(255,100,100,0.15); border-color: rgba(255,100,100,0.4); color: #ff9999; }
+    .tag.purple{ background: rgba(200,150,255,0.15); border-color: rgba(200,150,255,0.4); color: #d09fff; }
+    .small  { font-size: 0.7em; color: #888; }
+    .spacer { margin-top: 0.5em; }
+    .center { text-align: center !important; }
+
+    /* ── Status pill ── */
+    .status {
+      display: inline-block; border-radius: 12px;
+      padding: 2px 10px; font-size: 0.65em; font-weight: 700;
+      margin-left: 8px; vertical-align: middle;
+    }
+    .status-done  { background: rgba(138,255,138,0.18); border: 1px solid rgba(138,255,138,0.4); color: var(--accent3); }
+    .status-wip   { background: rgba(255,217,125,0.18); border: 1px solid rgba(255,217,125,0.4); color: var(--accent2); }
+    .status-todo  { background: rgba(255,100,100,0.18); border: 1px solid rgba(255,100,100,0.4); color: #ff9999; }
+
+    /* ── Mermaid diagrams ── */
+    .mermaid { margin: 0.6em auto; font-size: 0.78em; }
+    .mermaid svg { max-width: 100%; max-height: 420px; }
+    .mermaid-fill svg { max-height: none !important; width: 100% !important; height: auto !important; }
+
+    /* ── Table ── */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.68em; margin-top: 0.5em; }
+    .data-table th { background: rgba(255,255,255,0.1); color: var(--accent); padding: 7px 10px; text-align: left; font-weight: 600; }
+    .data-table td { padding: 6px 10px; border-top: 1px solid rgba(255,255,255,0.07); color: #ccc; vertical-align: top; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.04); }
+    .pri-high   { color: #ff9999; font-weight: 700; }
+    .pri-med    { color: var(--accent2); font-weight: 700; }
+    .pri-low    { color: #888; }
+
+    /* ── Code ── */
+    .reveal pre { width: 100%; box-shadow: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; }
+    .reveal pre code { font-size: 0.66em; line-height: 1.45; max-height: 480px; }
+
+    /* ── Pipeline steps ── */
+    .pipe-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:0.6em; }
+    .pipe-step { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; text-align: center; font-size: 0.72em; flex: 1; }
+    .pipe-arrow { color: #555; font-size: 1.2em; flex-shrink: 0; }
+
+    /* ── Check list ── */
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.78em; padding: 4px 0; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .checklist li:last-child { border-bottom: none; }
+    .chk-ok  { color: var(--accent3); font-size: 1em; flex-shrink: 0; }
+    .chk-todo { color: #ff9999; font-size: 1em; flex-shrink: 0; }
+
+    /* ── Image cards (for light-background diagrams/screenshots) ── */
+    .img-card { background: #fff; border-radius: 10px; padding: 10px; }
+    .img-card img { display: block; width: 100%; border-radius: 4px; }
+    .cite { font-size: 0.55em; color: #777; text-align: center; margin-top: 6px; }
+
+    /* ── Backlog issue list ── */
+    .issue-list { list-style: none; padding: 0; margin: 0.5em 0 0 0; }
+    .issue-list li { font-size: 0.72em; color: #ccc; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .issue-list li:last-child { border-bottom: none; }
+    .issue-list .num { color: var(--accent); font-weight: 700; margin-right: 6px; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ══════════════════════════════════════════════
+  TITLE
+══════════════════════════════════════════════ -->
+
+<section>
+<section class="title-slide" data-background-gradient="radial-gradient(ellipse at 60% 40%, #0a1e2a 0%, #0d1117 70%)">
+  <h1>Modern Software Development</h1>
+  <p style="font-size:0.9em; color:#aaa; margin-top:0.2em;">with Git, GitHub &amp; CI/CD</p>
+  <div style="margin-top:1em; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+    <span class="badge">Git &amp; GitHub</span>
+    <span class="badge">Conda &amp; Docker</span>
+    <span class="badge">Docs &amp; Testing</span>
+    <span class="badge">GitHub Actions</span>
+    <span class="badge">Data Challenge</span>
+  </div>
+  <hr style="border-color:#333; margin: 1em auto; width:50%;">
+  <p style="font-size:0.75em; color:#888;">1.5-day intensive course · one narrative, one shared codebase</p>
+</section>
+
+<section>
+  <h2>What This Course Is (and Isn't)</h2>
+  <div class="hl-box red">
+    <strong>Not a tool tutorial.</strong> Git, GitHub, Conda, Docker, pytest, GitHub Actions each have excellent docs already — we won't out-teach them.
+  </div>
+  <div class="hl-box green spacer">
+    <strong>This teaches the <em>principles</em> those tools implement</strong> — so the next tool you meet is a small translation, not a from-scratch relearn.
+  </div>
+  <div class="card-grid spacer">
+    <div class="card"><h4>Version control</h4><p>Collaboration, not backup — why history, branches &amp; review exist.</p></div>
+    <div class="card"><h4>Reproducibility</h4><p>Why "works on my machine" happens, and the discipline that prevents it.</p></div>
+    <div class="card"><h4>Automation</h4><p>Why CI/CD replaces manual, human-run checklists.</p></div>
+    <div class="card"><h4>Testing &amp; docs</h4><p>Design feedback and a deliverable — not checkboxes bolted on at the end.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Audience &amp; Format</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>🎓 Audience</h4>
+      <ul>
+        <li>Basic Python knowledge</li>
+        <li>No prior Git/GitHub experience assumed</li>
+        <li>Python-only — no C++ track</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);">
+      <h4>🧭 Format</h4>
+      <ul>
+        <li>Four sessions, a day and a half</li>
+        <li>Building toward one capstone</li>
+        <li>Fork · branch · PR · review · merge · conflict · retro</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Schedule — Day 1</h2>
+  <ul class="timeline">
+    <li><span class="dot dot-blue">1</span><div class="content"><strong>9:00–9:30</strong> — Icebreaker &amp; course overview</div></li>
+    <li><span class="dot dot-blue">2</span><div class="content"><strong>9:30–10:30</strong> — Session 1: Git &amp; GitHub basics <span>60 min</span></div></li>
+    <li><span class="dot dot-gold">3</span><div class="content"><strong>10:45–12:15</strong> — Session 2: Environment control <span>90 min</span></div></li>
+    <li><span class="dot dot-purple">4</span><div class="content"><strong>13:30–14:00</strong> — (S)nap Talk: GitHub Copilot intro</div></li>
+    <li><span class="dot dot-green">5</span><div class="content"><strong>14:00–15:45</strong> — Session 3: Documentation &amp; testing <span>90 min</span></div></li>
+    <li><span class="dot dot-purple">6</span><div class="content"><strong>15:45–16:45</strong> — Session 4: Workflow control (CI/CD) <span>60 min</span></div></li>
+    <li><span class="dot dot-red">7</span><div class="content"><strong>16:45–17:45</strong> — Session 5 (1/3): Data challenge tag-up</div></li>
+  </ul>
+  <div class="milestone"><strong>Evening (optional):</strong> teams fork, implement their claimed backlog task, open a PR.</div>
+</section>
+
+<section>
+  <h2>Schedule — Day 2</h2>
+  <ul class="timeline">
+    <li><span class="dot dot-red">1</span><div class="content"><strong>9:00–11:15</strong> — Session 5 (2/3): Merge &amp; integration <span>finished-first</span></div></li>
+    <li><span class="dot dot-red">2</span><div class="content"><strong>11:15–12:15</strong> — Session 5 (3/3): Wrap-up &amp; retrospective</div></li>
+  </ul>
+  <div class="hl-box gold spacer">
+    Sessions 1–4 are concepts + one live demo each. The <strong>data challenge</strong> is where they all get used at once, for real, against a repo you didn't write.
+  </div>
+</section>
+
+<section>
+  <h2>The Running Example</h2>
+  <p style="font-size:0.8em; color:#bbb;">A small <strong>astro-image pipeline</strong>, built collaboratively by teams of 2–3:</p>
+  <div class="pipe-row">
+    <div class="pipe-step">📥<br/>Load frames</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🧮<br/>Stack / denoise</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">✨<br/>Detect sources</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">📏<br/>Photometry</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🖼️<br/>Composite</div>
+  </div>
+  <div class="hl-box spacer">Teams fork the shared repo, split the work, and integrate it back — conflicts, review, and all — under real time pressure.</div>
+</section>
+</section>
+
+<!-- ══════════════════════════════════════════════
+  SECTION 01 — GIT & GITHUB
+══════════════════════════════════════════════ -->
+<section>
+<section class="section-slide">
+  <span class="section-num">01</span>
+  <h2>Git &amp; GitHub</h2>
+  <p style="font-size:0.75em; color:#888; margin-top:0.5em;">Session 1 · 60 min · lecture + live demo (no lab time today)</p>
+</section>
+
+<section>
+  <h2>Objectives</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> Use Git locally and with a remote</li>
+    <li><span class="chk-ok">✓</span> Understand <em>why</em> some Git operations are risky, not just <em>that</em> they are</li>
+    <li><span class="chk-ok">✓</span> Know how GitHub's collaborative workflow works: issues, forks, pull requests, review</li>
+  </ul>
+  <div class="hl-box gold spacer">No project code today — but everything needed to commit, branch, and collaborate once you fork the shared repo at tonight's tag-up.</div>
+</section>
+
+<section>
+  <h2>Why Version Control?</h2>
+  <div class="img-card" style="max-width:520px; margin:0 auto;">
+    <img src="https://assets.datamation.com/uploads/2020/12/tech-comics-version-control_5fcf02a527b83.jpeg" alt="Version control comic">
+  </div>
+  <p class="cite">Good old days when we were using floppy disks to save our work…</p>
+</section>
+
+<section>
+  <h2>Local → Centralized → Distributed</h2>
+  <div class="card-grid-3">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>💾 Local</h4>
+      <p>A "database" of changes on one machine.</p>
+      <p><em>Now — how to share it?</em></p>
+    </div>
+    <div class="card" style="border-color:rgba(255,217,125,0.4);">
+      <h4>🖥️ Centralized</h4>
+      <p>One server, clients check out files. CVS, Subversion…</p>
+      <p><em>What if the server is down?</em></p>
+    </div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);">
+      <h4>🌐 Distributed</h4>
+      <p>Every client has the full "database." Works offline, shares peer-to-peer.</p>
+      <p><em>Git, Mercurial…</em></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The Three States</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/areas.png" alt="The three states">
+  </div>
+  <div class="card-grid spacer">
+    <div class="card"><h4>Working directory</h4><p>The files you're editing.</p></div>
+    <div class="card"><h4>Staging area</h4><p>What goes into the <em>next</em> commit.</p></div>
+  </div>
+  <div class="hl-box spacer"><code>git add</code>: working dir → staging. <code>git commit</code>: staging → repository, "permanently" (see rewriting history, later).</div>
+</section>
+
+<section>
+  <h2>Everyday Commands</h2>
+  <pre><code class="language-bash">git init                  # start a new repo
+git status                # what's changed, what's staged
+git add &lt;path&gt;            # stage a change
+git commit -m "message"   # record staged changes
+git log --oneline         # history
+git diff                  # unstaged changes
+git diff --staged         # staged changes</code></pre>
+</section>
+
+<section>
+  <h2>Branches</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>🌿 What's a branch?</h4>
+      <ul>
+        <li>Just a movable pointer to a commit</li>
+        <li>Cheap to create, cheap to switch</li>
+        <li>This is what makes parallel, independent work possible</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+<pre><code class="language-bash">git branch feature-x      # create
+git switch feature-x      # move to it
+git switch -c feature-y   # create + move</code></pre>
+    </div>
+  </div>
+  <div class="img-card spacer" style="max-width:520px; margin-top:0.6em;">
+    <img src="https://git-scm.com/book/en/v2/images/head-to-testing.png" alt="Checkout a branch">
+  </div>
+</section>
+
+<section>
+  <h2>Merging Branches</h2>
+  <div class="img-card" style="max-width:560px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/basic-merging-2.png" alt="Merging branches">
+  </div>
+  <pre><code class="language-bash">git switch master
+git merge iss53</code></pre>
+</section>
+
+<section>
+  <h2>Merging &amp; Conflicts</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(255,100,100,0.4);">
+      <h4>⚠️ When it happens</h4>
+      <p>Two branches changed the <em>same lines</em> of the <em>same file</em> — Git can't guess which you want.</p>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+<pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+what you have
+=======
+what the other branch has
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch</code></pre>
+    </div>
+  </div>
+  <div class="hl-box green spacer">Fewer, smaller conflicts come from: committing often, pulling often, short-lived branches, and pull requests — exactly the situation the Day 2 merge session is designed to put you in on purpose.</div>
+</section>
+
+<section>
+  <h2>Rebasing</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(200,150,255,0.4);">
+      <h4>🔄 An alternative to merging</h4>
+      <ul>
+        <li>Replays one branch's commits on top of another</li>
+        <li>✅ pro: keeps history linear</li>
+        <li>⚠️ con: rewrites history — risky once pushed</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+<pre><code class="language-bash">git checkout experiment
+git rebase master
+git checkout master
+git merge experiment</code></pre>
+    </div>
+  </div>
+  <div class="img-card spacer" style="max-width:480px; margin-top:0.6em;">
+    <img src="https://git-scm.com/book/en/v2/images/basic-rebase-4.png" alt="Rebasing then merge">
+  </div>
+</section>
+
+<section>
+  <h2>Remotes: Fetch, Merge, Pull, Push</h2>
+  <div class="img-card" style="max-width:560px; margin:0 auto;">
+    <img src="img/1-software-development-basics/fetch-merge-pull-push.svg" alt="Remote repository, local repository, working copy: fetch, merge, and pull">
+  </div>
+  <div class="card-grid spacer">
+    <div class="card"><h4><code>git fetch</code></h4><p>Downloads what's new into your local repo — working copy unchanged yet.</p></div>
+    <div class="card"><h4><code>git merge</code></h4><p>Combines that into your working copy — same merge as any other.</p></div>
+    <div class="card"><h4><code>git pull</code></h4><p>Both in one command — a conflict can appear with no separate warning step.</p></div>
+    <div class="card"><h4><code>git push</code></h4><p>The only one going the other direction.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Rewriting History — Why It's Risky</h2>
+  <pre><code class="language-bash">git commit --amend      # fix the most recent commit
+git rebase -i HEAD~3    # rewrite the last 3 commits interactively</code></pre>
+  <div class="hl-box red spacer">
+    <strong>Rule of thumb: only rewrite history nobody else has fetched yet.</strong> Once pushed or pulled, your history and theirs no longer agree — Git refuses a normal push, and their copy keeps the old commits regardless of what you do to yours.
+  </div>
+</section>
+
+<section>
+  <h2>Live Demo: "Deleted" ≠ "Gone"</h2>
+  <p style="font-size:0.78em; color:#bbb;">The mistake we actually made building the data-challenge repo: 5 generated <code>.npy</code> files committed straight into the seed commit.</p>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(255,217,125,0.4);">
+      <h4>1️⃣ Plain <code>rm</code></h4>
+      <p>Only changes the working directory. <code>git status</code> still shows the file as tracked-but-deleted.</p>
+    </div>
+    <div class="card" style="border-color:rgba(255,100,100,0.4);">
+      <h4>2️⃣ <code>git rm</code> + commit</h4>
+      <p>Gone from <code>HEAD</code> — <strong>not</strong> from history. <code>git log -- file</code> still finds it.</p>
+    </div>
+  </div>
+  <div class="hl-box gold spacer">
+    <strong>3️⃣ Interactive rebase</strong> is what actually removes it from history — rewrite the commit that introduced it. <code>git rebase -i --root</code>, edit, <code>git rm</code>, <code>commit --amend</code>, <code>rebase --continue</code>.
+  </div>
+  <div class="hl-box red spacer"><strong>The catch:</strong> only works because nobody fetched our mistake yet. Fixing it for real needs <code>--force-with-lease</code> — and anyone who already pulled still has the file.</div>
+</section>
+
+<section>
+  <h2><code>.gitignore</code>: Preventing This Next Time</h2>
+  <pre><code class="language-text"># .gitignore
+__pycache__/
+*.pyc
+.venv/
+data/frames/          # generated, not source — regenerate, don't commit
+.env
+*.pem
+*_token
+credentials.json</code></pre>
+  <div class="card-grid spacer">
+    <div class="card" style="border-color:rgba(255,217,125,0.4);">
+      <h4>⚠️ Only affects untracked files</h4>
+      <p>Already committed? Also need <code>git rm --cached &lt;path&gt;</code> once.</p>
+    </div>
+    <div class="card" style="border-color:rgba(255,100,100,0.4);">
+      <h4>🚫 Not a security boundary</h4>
+      <p>A leaked credential must be <strong>revoked/rotated</strong> — history cleanup alone doesn't undo a clone that already happened.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>GitHub: What It Adds on Top of Git</h2>
+  <div class="card-grid">
+    <div class="card"><h4>🐙 Platform</h4><p>Hosts repos, adds issue tracking, PRs + review, Actions (CI/CD), Pages, Container Registry.</p></div>
+    <div class="card"><h4>📖 Vocabulary</h4>
+      <ul>
+        <li><strong>Repository</strong> — a project's Git history, hosted</li>
+        <li><strong>Fork</strong> — your own copy of someone else's repo</li>
+        <li><strong>Issue</strong> — tracks a bug, task, or question</li>
+        <li><strong>Pull request</strong> — "please merge this branch into that one"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Roles: Developer, Reviewer, Maintainer</h2>
+  <p style="font-size:0.75em; color:#bbb;">GitHub's real permission levels: Read &lt; <strong>Triage</strong> &lt; <strong>Write</strong> &lt; <strong>Maintain</strong> &lt; Admin — not a simplification.</p>
+  <table class="data-table">
+    <tr><th>Role</th><th>Level</th><th>Does</th></tr>
+    <tr><td><strong>Developer</strong></td><td><code>Write</code></td><td>Pushes branches, opens PRs, does the coding — most people on a team</td></tr>
+    <tr><td><strong>Reviewer</strong></td><td><code>Triage</code></td><td>Comments, requests changes, approves — <em>cannot</em> push or merge</td></tr>
+    <tr><td><strong>Maintainer</strong></td><td><code>Maintain</code></td><td>Merges approved PRs, manages branch protection — the gatekeeper</td></tr>
+  </table>
+  <div class="hl-box spacer">Everyone plays more than one role over the two days. Who's maintainer for the shared upstream repo gets decided for real at the Day 1 tag-up.</div>
+</section>
+
+<section>
+  <h2>Branching Strategies</h2>
+  <div class="card-grid">
+    <div class="card" style="padding:6px;"><div class="img-card"><img src="img/1-software-development-basics/git_flow_branching.png" alt="Gitflow"></div><p class="center" style="font-size:0.7em; margin-top:4px;">Gitflow — most complex</p></div>
+    <div class="card" style="padding:6px;"><div class="img-card"><img src="img/1-software-development-basics/github_flow_branching.png" alt="GitHub flow"></div><p class="center" style="font-size:0.7em; margin-top:4px;">GitHub flow — simplest</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The Workflow This Course Uses: GitHub Flow</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> <code>main</code> is always deployable</li>
+    <li><span class="chk-ok">✓</span> Every change happens on a short-lived branch off <code>main</code></li>
+    <li><span class="chk-ok">✓</span> Open a PR early — where discussion happens, not just a final gate</li>
+    <li><span class="chk-ok">✓</span> Review, address feedback, merge, delete the branch</li>
+  </ul>
+  <div class="hl-box gold spacer">Deliberately the simplest strategy — simple enough to run with a repo you've never seen before, exactly the situation at tonight's tag-up.</div>
+</section>
+
+<section>
+  <h2>Fork → Branch → PR, For This Course</h2>
+  <div class="mermaid mermaid-fill">
+    %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#1e3a5f', 'primaryTextColor': '#ccc', 'lineColor': '#555', 'edgeLabelBackground': '#0d1117'}, 'flowchart': {'useMaxWidth': true, 'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+    flowchart LR
+      A["🍴 Fork\nupstream repo"]:::fork --> B["🌿 Branch\ninside your fork"]:::dev
+      B --> C["💻 Commit\nclaimed task"]:::dev
+      C --> D["📬 Pull Request\nfork → upstream"]:::pr
+      D --> E["👀 Review\nTriage role"]:::review
+      E --> F["✅ Merge\nMaintain role"]:::merge
+      classDef fork fill:#2a1a3a,stroke:#d09fff,color:#ccc
+      classDef dev fill:#1e2a3a,stroke:#7ecfff,color:#ccc
+      classDef pr fill:#1a2a1a,stroke:#8aff8a,color:#ccc
+      classDef review fill:#3a2a1a,stroke:#ffd97d,color:#ccc
+      classDef merge fill:#1a2a1a,stroke:#8aff8a,color:#ccc
+  </div>
+  <div class="hl-box spacer">Every team forks the shared upstream data-challenge repo. Internal workflow is the team's choice — integrating back always happens via a <strong>PR from the fork</strong>.</div>
+</section>
+</section>
+
+<!-- ══════════════════════════════════════════════
+  SECTION 02 — ENVIRONMENT CONTROL
+══════════════════════════════════════════════ -->
+<section>
+<section class="section-slide">
+  <span class="section-num">02</span>
+  <h2>Environment Control</h2>
+  <p style="font-size:0.75em; color:#888; margin-top:0.5em;">Session 2 · 90 min · Conda/Miniforge &amp; Docker</p>
+</section>
+
+<section>
+  <h2>Objectives</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> Explain <em>why</em> "it works on my machine" happens</li>
+    <li><span class="chk-ok">✓</span> The reproducibility vs. replicability distinction</li>
+    <li><span class="chk-ok">✓</span> Create, export, recreate a Conda/Miniforge environment</li>
+    <li><span class="chk-ok">✓</span> Build and run a Docker image for the same code</li>
+    <li><span class="chk-ok">✓</span> Know which tool to reach for, and when neither is enough</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Reproducibility vs. Replicability</h2>
+  <table class="data-table">
+    <tr><th></th><th>Reproducibility</th><th>Replicability</th></tr>
+    <tr><td>Nature</td><td>Technical</td><td>Scientific</td></tr>
+    <tr><td>Question</td><td>Done right?</td><td>The right thing to do?</td></tr>
+    <tr><td>Answer</td><td>Straightforward — yes/no</td><td>Difficult to judge — it depends…</td></tr>
+    <tr><td>Role</td><td>Verification</td><td>Validation</td></tr>
+    <tr><td>In computing</td><td>Same software + params + data → identical result?</td><td>New software + same params (or not) → equivalent result?</td></tr>
+  </table>
+  <div class="hl-box gold spacer">There's a cost to reproducibility — match the effort to what the result is for. Full talk: Konrad Hinsen's seminar on reproducibility.</div>
+</section>
+
+<section>
+  <h2>What's a Computation, Really?</h2>
+  <div class="img-card" style="max-width:560px; margin:0 auto;">
+    <img src="img/2-environment-control/computation-io.svg" alt="A computation is a mapping from input bits to output bits">
+  </div>
+  <div class="hl-box spacer">A computation is a mapping from input bits to output bits — "meaning" is a human overlay, not something the computer knows.</div>
+</section>
+
+<section>
+  <h2>Nothing Here Is Smooth</h2>
+  <div class="img-card" style="max-width:560px; margin:0 auto;">
+    <img src="img/2-environment-control/computation-chaotic.svg" alt="A 1-bit change in input can cause an outsized change in output">
+  </div>
+  <div class="hl-box red spacer">A 1-bit change in the input can cause an outsized change in the output. "I used the same code" ≠ "I got the same result."</div>
+</section>
+
+<section>
+  <h2>Data, Code… and Environment</h2>
+  <div class="card-grid">
+    <div class="img-card"><img src="img/2-environment-control/computation-data-code.svg" alt="Split input into data and code"></div>
+    <div class="img-card"><img src="img/2-environment-control/computation-data-code-env.svg" alt="A third, usually invisible input: the environment"></div>
+  </div>
+  <div class="hl-box gold spacer">A third, usually invisible input: the <strong>environment</strong> (interpreter, libraries, OS, hardware) — the whole reason this session exists.</div>
+</section>
+
+<section>
+  <h2>Whose Problem Is Which Layer?</h2>
+  <table class="data-table">
+    <tr><th></th><th>data</th><th>program</th><th>environment</th></tr>
+    <tr><td>Scientist's view</td><td>my research</td><td>my colleagues' code</td><td>stuff I don't care about</td></tr>
+    <tr><td>Engineer's view</td><td>my colleagues' data</td><td>my code</td><td>stuff I don't care about</td></tr>
+    <tr><td>What's actually true</td><td>zeros and ones</td><td>an interpretation of the data</td><td>an interpretation of the program</td></tr>
+  </table>
+  <div class="hl-box spacer">Everyone treats someone else's layer as "not their problem." Managing environments makes that explicit instead of leaving it assumed.</div>
+</section>
+
+<section>
+  <h2>How to Manage Environments?</h2>
+  <div class="img-card" style="max-width:420px; margin:0 auto;">
+    <img src="img/2-environment-control/computation-tool-levels.svg" alt="Tool levels for managing environments">
+  </div>
+</section>
+
+<section>
+  <h2>Comparing the Tools</h2>
+  <table class="data-table">
+    <tr><th>Tool</th><th>Reproducibility</th><th>Isolation</th><th>Best for</th></tr>
+    <tr><td>Conda</td><td>Limited (resolver drift)</td><td>Weak — shares host</td><td>Day-to-day dev, prototyping</td></tr>
+    <tr><td>Conda + <code>conda-lock</code></td><td>Better (hashes, pinned)</td><td>Weak</td><td>Shared dev environments</td></tr>
+    <tr><td><strong>Docker</strong></td><td>High, if base image pinned</td><td>Strong — undeclared deps fail loudly</td><td>Deployment, CI</td></tr>
+    <tr><td>Guix/Nix</td><td>Bitwise exact</td><td>Strongest — sandboxed</td><td>Publication-grade research</td></tr>
+  </table>
+  <div class="hl-box gold spacer">Isolation isn't just a nicety — it's what forces undeclared dependencies to surface, and it's a security boundary. <strong>Do you need bitwise reproducibility, or is replicability enough?</strong> Usually the second.</div>
+</section>
+
+<section>
+  <h2>Conda / Miniforge</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(255,100,100,0.4);">
+      <h4>⚠️ Watch out</h4>
+      <p>Anaconda's <code>defaults</code> channel is under a commercial license — many institutions restrict it. Use <strong><code>conda-forge</code></strong> instead (what Miniforge ships by default).</p>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+<pre><code class="language-bash">conda create -n myenv python=3.11 numpy pandas
+conda activate myenv
+conda install matplotlib
+conda env export --no-builds > environment.yml
+conda env create -f environment.yml -n myenv2
+conda env remove -n myenv</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Spot the Problem</h2>
+  <pre><code class="language-yaml">channels: [defaults]
+dependencies:
+  - python=3.7
+  - numpy=1.18.5
+  - pandas=1.0.5
+  - pip:
+      - scikit-learn==0.22</code></pre>
+  <div class="hl-box red spacer"><code>defaults</code> channel (license) · hard-pinned to old versions (no security updates, brittle) · <code>scikit-learn</code> via pip when conda-forge has it too.</div>
+  <div class="hl-box green spacer">Fix: <code>conda-forge</code> channel, version <em>ranges</em> (<code>python&gt;=3.10,&lt;3.13</code>), let conda resolve.</div>
+</section>
+
+<section>
+  <h2>Containers: Docker</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>📦 What it buys</h4>
+      <ul>
+        <li>Packages OS libraries <em>and</em> code together</li>
+        <li>Isolation + portability — same image, any machine</li>
+        <li>Not magic either: pin the base image digest</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+<pre><code class="language-dockerfile">FROM python:3.11-slim
+RUN pip install numpy matplotlib
+COPY . /app
+WORKDIR /app
+CMD ["python", "-m", "astrolab.pipeline"]</code></pre>
+    </div>
+  </div>
+  <pre class="spacer"><code class="language-bash">docker build -t astrolab .
+docker run --rm astrolab</code></pre>
+</section>
+
+<section>
+  <h2>Demo — Live, Against the Data Challenge Repo</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>1. Ad hoc environment</h4>
+      <pre><code class="language-bash">conda create -n astrolab python=3.11 \
+    numpy matplotlib -y
+conda activate astrolab
+python -m astrolab.pipeline</code></pre>
+      <p>Stops at <code>NotImplementedError</code> — expected, backlog work. Point: this env exists only on this machine.</p>
+    </div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);">
+      <h4>2 &amp; 3. Share it, then containerize</h4>
+      <pre><code class="language-bash">conda env export --no-builds \
+    > /tmp/environment.yml
+docker build -t astrolab-demo .
+docker run --rm astrolab-demo</code></pre>
+      <p>Same error, same code — now runs identically on any machine with Docker.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Exercises — Tonight's Backlog</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>📋 <code>environment.yml</code> for the repo</h4>
+      <p>Version <em>ranges</em>, <code>conda-forge</code> not <code>defaults</code>, update README's Quickstart.</p>
+      <p class="small">Split: core deps · optional <code>astroquery</code> extra · clean-machine test</p>
+    </div>
+    <div class="card" style="border-color:rgba(255,217,125,0.4);">
+      <h4>🐳 <code>Dockerfile</code> for the repo</h4>
+      <p>Install deps, copy code, run the pipeline by default.</p>
+      <p class="small">Split: minimal working image · size/layer optimization · README docs</p>
+    </div>
+  </div>
+</section>
+</section>
+
+<!-- ══════════════════════════════════════════════
+  SECTION 03 — DOCUMENTATION & TESTING
+══════════════════════════════════════════════ -->
+<section>
+<section class="section-slide">
+  <span class="section-num">03</span>
+  <h2>Documentation &amp; Testing</h2>
+  <p style="font-size:0.75em; color:#888; margin-top:0.5em;">Session 3 · 90 min · docs (30 min) + testing (60 min)</p>
+</section>
+
+<section>
+  <h2>Objectives</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> Explain technical debt well enough to recognize it</li>
+    <li><span class="chk-ok">✓</span> Turn docstrings into docs <em>and</em> tests (<code>doctest</code>), generate an API site</li>
+    <li><span class="chk-ok">✓</span> Know the unit/functional/regression/integration vocabulary</li>
+    <li><span class="chk-ok">✓</span> Write a unit test, mock a dependency by hand and with <code>unittest.mock</code></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Technical Debt</h2>
+  <div class="img-card" style="max-width:600px; margin:0 auto;">
+    <img src="https://cdn.aboutwayfair.com/9f/98/3bbe727a42ae9eb6dea4fea70207/techdebtcartoon.png" alt="A dilapidated house labeled Technical Debt">
+  </div>
+  <div class="card-grid spacer">
+    <div class="card"><h4>Code debt</h4><p>Copy-pasted logic; one fix needs applying in N places.</p></div>
+    <div class="card"><h4>Design debt</h4><p>Hardcoded paths/thresholds; breaks elsewhere.</p></div>
+    <div class="card"><h4>Testing debt</h4><p>A change silently breaks old behavior.</p></div>
+    <div class="card"><h4>Documentation debt</h4><p>Future-you loses an afternoon.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Why Testing &amp; Docs Come First</h2>
+  <div class="hl-box gold">Code and design debt get paid down by review and refactoring — but refactoring <em>without tests</em> is just changing things and hoping.</div>
+  <div class="card-grid spacer">
+    <div class="card" style="border-color:rgba(138,255,138,0.4);"><h4>Tests</h4><p>"I refactored this, I think it still works" → "…and the suite proves it."</p></div>
+    <div class="card" style="border-color:rgba(126,207,255,0.4);"><h4>Docs</h4><p>"Why does this do that?" from archaeology → five-second lookup.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Why Test Early</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="https://www.codecaptain.cc/assets/img/article/20230727/2023072702.png" alt="Defects introduced vs found vs cost to repair, across phases">
+  </div>
+  <div class="hl-box red spacer">The same typo in a formula: a minute in code review, an hour in system testing, hours plus an emergency release in production. <strong>Nothing about the bug changed — only how much got built on top of it.</strong></div>
+</section>
+
+<section>
+  <h2>Docs &amp; Tests: Two Halves of the Same Idea</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);"><h4>📝 Docstring</h4><p>The specification you want — what a function should do, for which inputs.</p></div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);"><h4>✅ Unit test</h4><p>Code that checks the function actually behaves that way.</p></div>
+  </div>
+  <div class="hl-box gold spacer"><code>doctest</code> is the extreme case: the same lines <em>are</em> the spec and the check — they can't drift apart.</div>
+</section>
+
+<section>
+  <h2>Docstring → Doctest → API Docs</h2>
+  <pre><code class="language-python">def factorial(n):
+    """Return the factorial of n, an exact non-negative integer.
+
+    >>> [factorial(n) for n in range(5)]
+    [1, 1, 2, 6, 24]
+    >>> factorial(-1)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be >= 0
+    """
+    if n < 0:
+        raise ValueError("n must be >= 0")
+    result = 1
+    for factor in range(2, n + 1):
+        result *= factor
+    return result</code></pre>
+  <div class="hl-box spacer"><strong>Executable documentation</strong> — the example in the docstring <em>is</em> the test. Docs can't quietly drift from the code.</div>
+</section>
+
+<section>
+  <h2>API Doc Tools</h2>
+  <table class="data-table">
+    <tr><th>Tool</th><th>Setup</th><th>Fits</th></tr>
+    <tr><td><strong>pdoc</strong> <span class="tag green">today's pick</span></td><td>zero-config, one command</td><td>small/medium projects, fast to demo</td></tr>
+    <tr><td>mkdocstrings</td><td>needs an MkDocs site</td><td>you already want a hand-written docs site</td></tr>
+    <tr><td>Sphinx</td><td>most config, most powerful</td><td>large/mature projects, historical default</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>The README — Every Project's Entry Point</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> <strong>What &amp; why</strong> — problem solved</li>
+    <li><span class="chk-ok">✓</span> <strong>Setup</strong> — <code>environment.yml</code>/<code>Dockerfile</code> (Session 2)</li>
+    <li><span class="chk-ok">✓</span> <strong>Usage</strong> — copy-pasteable commands, example I/O</li>
+    <li><span class="chk-ok">✓</span> <strong>Contributing</strong> — tests, format, branch/PR workflow (Session 1)</li>
+    <li><span class="chk-ok">✓</span> <strong>Reporting issues</strong> &amp; license</li>
+  </ul>
+  <div class="hl-box gold spacer">The data-challenge repo's README has the first two — missing the rest, on purpose (backlog).</div>
+</section>
+
+<section>
+  <h2>Testing Vocabulary</h2>
+  <table class="data-table">
+    <tr><th>Type</th><th>Checks</th><th>Example</th></tr>
+    <tr><td><strong>Unit</strong></td><td>one function, in isolation</td><td><code>add(2, 3) == 5</code></td></tr>
+    <tr><td><strong>Integration</strong></td><td>multiple components together</td><td>API call reaches the DB and back</td></tr>
+    <tr><td><strong>Functional</strong></td><td>a full feature/scenario</td><td>load → train → check accuracy</td></tr>
+    <tr><td><strong>Regression</strong></td><td>a bug, once fixed, stays fixed</td><td>test added the moment you fix it</td></tr>
+  </table>
+  <div class="hl-box spacer center">"If it's not tested, it's broken — you just don't know it yet."</div>
+</section>
+
+<section>
+  <h2>Unit Tests Are More Than Testing</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> Forces you to think through your internal design</li>
+    <li><span class="chk-ok">✓</span> Forces a spec for internal APIs nobody would write down otherwise</li>
+    <li><span class="chk-ok">✓</span> A green suite is permission to refactor without re-litigating "does this still work?"</li>
+    <li><span class="chk-ok">✓</span> Encodes corner cases already fought through</li>
+    <li><span class="chk-ok">✓</span> Outlives the implementation — a spec you can carry into a rewrite</li>
+  </ul>
+  <div class="hl-box red spacer">Writing code without testing it is no engineering, it's just writing code.</div>
+</section>
+
+<section>
+  <h2>Demo — Part A: Docs, Against the Data Challenge</h2>
+  <pre><code class="language-bash">python -m pytest --doctest-modules \
+    astrolab/io.py astrolab/synth.py
+
+pdoc astrolab</code></pre>
+  <div class="hl-box spacer">Every <code>&gt;&gt;&gt;</code> example just ran as a test. <code>pdoc</code> then generates a full API reference — nothing written by hand beyond the docstrings already in the code.</div>
+</section>
+
+<section>
+  <h2>Demo — Part B: First Unit Test</h2>
+  <pre><code class="language-python">class Particle:
+    def __init__(self, pos_x, vx): ...
+    def move(self, dt): ...
+
+def test_constructor(self):
+    p = Particle(pos_x=0.0, vx=2.0)
+    self.assertEqual(p.get_x(), 0.0)
+    self.assertEqual(p.get_vx(), 2.0)
+
+def test_move(self):
+    p = Particle(pos_x=0.0, vx=2.0)
+    p.move(dt=3.0)
+    self.assertEqual(p.get_x(), 6.0)</code></pre>
+</section>
+
+<section>
+  <h2>Demo — Mocking</h2>
+  <div class="card-grid">
+    <div class="card" style="padding:0; overflow:hidden;">
+      <h4 style="padding:10px 14px 0;">Manual mock</h4>
+<pre><code class="language-python">class ManualMockBackend(StorageBackend):
+    def pread(self, offset, size):
+        return bytearray(b"Hello")
+    def pwrite(self, data, offset):
+        return 5</code></pre>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+      <h4 style="padding:10px 14px 0;"><code>unittest.mock</code></h4>
+<pre><code class="language-python">backend.pread = mock.MagicMock(
+    return_value=bytearray(b"Hello"))
+result = cache.pread(offset=0, size=5)
+backend.pread.assert_called_once_with(0, 5)</code></pre>
+    </div>
+  </div>
+  <div class="hl-box green spacer">Payoff: call <code>pread(0,5)</code> twice, assert the mock was called <em>once</em> — the second read must be served from cache. A real backend would make this slow and awkward to write.</div>
+</section>
+
+<section>
+  <h2>Bonus: a Real Bug Hunt With MALT</h2>
+  <div class="img-card" style="max-width:600px; margin:0 auto;">
+    <img src="img/3-documentation-testing/malt-webview-bug.png" alt="MALT webview showing 0 allocated memory">
+  </div>
+  <div class="card-grid spacer">
+    <div class="card" style="border-color:rgba(255,100,100,0.4);"><h4>Integration test</h4><p><code>ctest -V</code> — something's off, somewhere in the whole program.</p></div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);"><h4>Unit tests</h4><p><code>ctest -R {TEST_NAME} -V</code> — one file, one function, a five-minute find.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Conclusion: Write Them, But Write Them Well</h2>
+  <pre><code class="language-python">def test_elastic_collision(self):
+    p1, p2 = Particle(0.0, 1.0), Particle(5.0, -1.0)
+    result = elastic_collision(p1, p2, dt=10)
+    self.assertIsNotNone(result)   # checks nothing about the physics</code></pre>
+  <div class="hl-box red spacer">Passes, coverage counts every line touched, CI goes green — and would pass exactly as well if the function returned garbage.</div>
+  <div class="hl-box gold spacer"><strong>Relevance first, coverage second.</strong> 60% coverage of tests that check the right answer beats 100% of tests that check nothing.</div>
+</section>
+
+<section>
+  <h2>AI Code Assistants: Draft, Not Verdict</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(138,255,138,0.4);"><h4>🚀 Removes the last excuse</h4><p>Copilot drafts a docstring from your function, or a first-pass test from your docstring, in seconds.</p></div>
+    <div class="card" style="border-color:rgba(255,100,100,0.4);"><h4>⚠️ Review it like a teammate's PR</h4><p>A plausible docstring or test describing the <em>wrong</em> behavior is worse than none.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Exercises — Tonight's Backlog</h2>
+  <div class="card-grid-3">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);"><h4>🧪 <code>astrolab.synth</code> tests</h4><p class="small">Determinism · shape edge cases · statistical sanity</p></div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);"><h4>🧪 <code>astrolab.io</code> tests</h4><p class="small">Round-trip · error paths · shared test layout</p></div>
+    <div class="card" style="border-color:rgba(255,217,125,0.4);"><h4>📚 API doc site</h4><p class="small"><code>pdoc</code>/mkdocstrings · missing docstrings · README link</p></div>
+  </div>
+</section>
+</section>
+
+<!-- ══════════════════════════════════════════════
+  SECTION 04 — WORKFLOW CONTROL
+══════════════════════════════════════════════ -->
+<section>
+<section class="section-slide">
+  <span class="section-num">04</span>
+  <h2>Workflow Control</h2>
+  <p style="font-size:0.75em; color:#888; margin-top:0.5em;">Session 4 · 60 min · pixi &amp; GitHub Actions CI/CD</p>
+</section>
+
+<section>
+  <h2>Objectives</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> Explain what CI/CD automates, and why</li>
+    <li><span class="chk-ok">✓</span> Use pixi's project-scoped, lockfile-native workflow</li>
+    <li><span class="chk-ok">✓</span> Write a GitHub Actions workflow that runs on every push</li>
+    <li><span class="chk-ok">✓</span> Build and push a Docker image to GHCR automatically</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Why Automate?</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="img/4-workflow-control/manual-devops-workflow.svg" alt="Manual software delivery breaking down step by step">
+  </div>
+  <div class="hl-box red spacer"><strong>The demo effect:</strong> it works perfectly right up until you run it in front of an audience. "It ran here a minute ago" ≠ "it reliably runs."</div>
+</section>
+
+<section>
+  <h2>DevOps &amp; CI/CD</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);"><h4>DevOps</h4><p>Treat "build, test, release, operate" as one continuous, shared responsibility — not "dev throws it over the wall."</p></div>
+    <div class="card" style="border-color:rgba(138,255,138,0.4);"><h4>CI/CD</h4><p><strong>CI</strong>: same checks, same clean environment, automatically, every push. <strong>CD</strong>: extend that to shipping the result.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The Automated Replacement</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="img/4-workflow-control/automated-devops-workflow.svg" alt="Automated software delivery: push, CI tests, merge, CD builds and ships">
+  </div>
+  <div class="hl-box green spacer">Same shape as the manual version, stage for stage — the difference is every arrow after "push" runs itself.</div>
+</section>
+
+<section>
+  <h2>pixi: Project-Scoped, Lockfile-Native</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);">
+      <h4>Why beyond Conda</h4>
+      <ul>
+        <li>Env lives <em>in</em> the project (<code>pixi.toml</code>), not <code>~/.conda/envs</code></li>
+        <li><strong>Tasks</strong>: <code>pixi run test</code> — everyone, and CI, run the same invocation</li>
+        <li><strong>Lockfile always</strong>, not an opt-in step</li>
+        <li>Multi-platform pins in one file</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:0; overflow:hidden;">
+<pre><code class="language-bash">pixi init astrolab -c conda-forge
+cd astrolab
+pixi add numpy matplotlib
+pixi task add test "pytest"
+pixi run test
+pixi run python -m astrolab.pipeline</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>GitHub Actions, Mechanics</h2>
+  <div class="card-grid">
+    <div class="card"><h4>📄 Workflow</h4><p>YAML in <code>.github/workflows/</code>, triggered by events: <code>on: push</code>, <code>pull_request</code>…</p></div>
+    <div class="card"><h4>⚙️ Jobs &amp; steps</h4><p>Jobs run in parallel on a fresh runner. <code>uses:</code> a reusable action, <code>run:</code> a shell command.</p></div>
+    <div class="card"><h4>🔒 Secrets</h4><p><code>secrets.GITHUB_TOKEN</code> auto-provisioned per run — never in a commit.</p></div>
+    <div class="card"><h4>📊 Actions tab</h4><p>Every run, green or red, full logs per step.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Minimal Workflow</h2>
+  <pre><code class="language-yaml"># .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m doctest main.py -v</code></pre>
+</section>
+
+<section>
+  <h2>GHCR: Picking Back Up From Session 2</h2>
+  <pre><code class="language-yaml">  docker:
+    runs-on: ubuntu-latest
+    needs: test              # only if tests passed
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}</code></pre>
+</section>
+
+<section>
+  <h2>CI/CD Pipeline, End to End</h2>
+  <div class="mermaid mermaid-fill">
+    %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#1e3a5f', 'primaryTextColor': '#ccc', 'lineColor': '#555', 'edgeLabelBackground': '#0d1117'}, 'flowchart': {'useMaxWidth': true, 'nodeSpacing': 30, 'rankSpacing': 30}}}%%
+    flowchart TD
+      A["📤 git push"]:::io --> B["🏃 Fresh runner\ncheckout + setup-python"]:::core
+      B --> C["✅ test job\npytest / doctest"]:::core
+      C -->|"needs: test"| D["🐳 docker job\nbuild image"]:::docker
+      D --> E["📦 push to GHCR\n:latest + :sha"]:::docker
+      classDef io fill:#1e2a3a,stroke:#7ecfff,color:#ccc
+      classDef core fill:#1a2a1a,stroke:#8aff8a,color:#ccc
+      classDef docker fill:#2a1a3a,stroke:#d09fff,color:#ccc
+  </div>
+  <div class="hl-box spacer"><code>needs: test</code> — the image only builds and pushes if tests pass first. Two tags: <code>latest</code> (moving) and the commit SHA (immutable).</div>
+</section>
+
+<section>
+  <h2>Demo — Live, In a Scratch Repo</h2>
+  <ol style="font-size:0.8em; color:#ccc; padding-left:1.2em;">
+    <li>Write <code>main.py</code> with a doctest, commit</li>
+    <li>Add <code>.github/workflows/ci.yml</code>, push, watch the <strong>Actions</strong> tab turn green</li>
+    <li>Break it on purpose (typo the doctest) — watch it turn red, with the failure in the log</li>
+    <li>Add the <code>docker</code> job — watch it push to GHCR, pull the image from anywhere</li>
+  </ol>
+  <div class="hl-box green spacer">Nobody had to remember to run this locally. Same image, built by a runner you never logged into.</div>
+</section>
+
+<section>
+  <h2>Exercises — Tonight's Backlog</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(126,207,255,0.4);"><h4>⚙️ CI workflow for the repo</h4><p>Checkout, setup Python, install deps, run a real check — smoke-check + <code>pytest</code> if tests exist.</p></div>
+    <div class="card" style="border-color:rgba(200,150,255,0.4);"><h4>🐳 Docker → GHCR</h4><p>Build on Module 2's Dockerfile, push on every push to <code>main</code>, tag <code>latest</code> + SHA.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Going Further — From CI/CD to MLOps</h2>
+  <div class="card-grid">
+    <div class="img-card"><img src="https://doc.dvc.org/static/4ca618c243183598630e333c3651e987/16398/cicd4ml-0.png" alt="Manual ML workflow drifting out of sync"></div>
+    <div class="img-card"><img src="https://doc.dvc.org/static/300c88b3b1b5f65753629d661cc916e5/2e49e/cicd4ml.png" alt="Automated MLOps workflow reporting metrics"></div>
+  </div>
+  <div class="hl-box gold spacer">Data science adds two more moving parts: <strong>datasets</strong> and <strong>experiment results</strong>. <strong>MLflow</strong> (experiment tracking) and <strong>DVC</strong> (data versioning) are a reasonable pair to start from.</div>
+</section>
+</section>
+
+<!-- ══════════════════════════════════════════════
+  SECTION 05 — DATA CHALLENGE
+══════════════════════════════════════════════ -->
+<section>
+<section class="section-slide">
+  <span class="section-num">05</span>
+  <h2>The Data Challenge</h2>
+  <p style="font-size:0.75em; color:#888; margin-top:0.5em;">Session 5 · 3 parts, ~4h15 · the capstone — everything gets applied, not lectured</p>
+</section>
+
+<section>
+  <h2>Objectives</h2>
+  <ul class="checklist">
+    <li><span class="chk-ok">✓</span> One real fork → branch → PR → review → merge cycle</li>
+    <li><span class="chk-ok">✓</span> Practice developer/reviewer/maintainer roles for real</li>
+    <li><span class="chk-ok">✓</span> Experience — and resolve — a genuine merge conflict</li>
+    <li><span class="chk-ok">✓</span> Run a retrospective that treats "we didn't finish" as data, not failure</li>
+  </ul>
+</section>
+
+<section>
+  <h2>The Mission, Recap</h2>
+  <div class="pipe-row">
+    <div class="pipe-step">📥<br/>Load frames</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🧮<br/>Stack / denoise</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">✨<br/>Detect sources</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">📏<br/>Photometry</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🖼️<br/>Composite</div>
+  </div>
+  <div class="hl-box gold spacer">Five noisy synthetic exposures of the same star field. The pipeline loads them, then stops at the first <code>NotImplementedError</code> — that gap, plus "no env spec, no CI, no docs, no tests," <em>is</em> the backlog.</div>
+</section>
+
+<section>
+  <h2>Three Parts, Two Days</h2>
+  <ul class="timeline">
+    <li><span class="dot dot-red">1</span><div class="content"><strong>5 (1/3) Tag-up</strong> <span>Day 1, 16:45–17:45</span> — team formation, backlog walkthrough, fix roles &amp; workflow</div></li>
+    <li><span class="dot dot-gold">✱</span><div class="content"><strong>Evening work</strong> <span>optional</span> — teams fork, implement, open a PR</div></li>
+    <li><span class="dot dot-red">2</span><div class="content"><strong>5 (2/3) Merge session</strong> <span>Day 2, 9:00–11:15</span> — integrate PRs, finished-first</div></li>
+    <li><span class="dot dot-red">3</span><div class="content"><strong>5 (3/3) Wrap-up</strong> <span>Day 2, 11:15–12:15</span> — merge what's left, structured retrospective</div></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Team Formation</h2>
+  <div class="hl-box">Groups of 2–3. Any mix is fine — the point of tonight is splitting work <em>inside</em> the team, not sorting by skill level.</div>
+</section>
+
+<section>
+  <h2>Demo: Fork → Branch → PR</h2>
+  <pre><code class="language-bash">gh repo fork jzoubian/software-development_data-challenge \
+    --clone --remote
+cd software-development_data-challenge
+git remote -v
+# origin   -> your fork      (you push here)
+# upstream -> the shared repo (you open PRs against this)
+
+git checkout -b issue-8-stack-frames
+git add README.md && git commit -m "Test the fork/PR flow"
+git push -u origin issue-8-stack-frames
+gh pr create --repo jzoubian/software-development_data-challenge \
+  --base main --head &lt;you&gt;:issue-8-stack-frames</code></pre>
+  <div class="hl-box spacer">This exact sequence is what every team runs tonight for real.</div>
+</section>
+
+<section>
+  <h2>The Backlog — From Earlier Modules</h2>
+  <ul class="issue-list">
+    <li><span class="num">#1</span><code>environment.yml</code> — Module 2 — <span class="small">environment.yml, README.md</span></li>
+    <li><span class="num">#2</span><code>Dockerfile</code> — Module 2 — <span class="small">Dockerfile, README.md</span></li>
+    <li><span class="num">#3</span>pytest suite for <code>astrolab.synth</code> — Module 3 — <span class="small">tests/</span></li>
+    <li><span class="num">#4</span>pytest suite for <code>astrolab.io</code> — Module 3 — <span class="small">tests/, pyproject.toml</span></li>
+    <li><span class="num">#5</span>API doc site — Module 3 — <span class="small">docstrings, README.md</span></li>
+    <li><span class="num">#6</span>GitHub Actions CI workflow — Module 4 — <span class="small">.github/workflows/</span></li>
+    <li><span class="num">#7</span>Docker build + push to GHCR — Module 4 — <span class="small">.github/workflows/, Dockerfile</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>The Backlog — The Pipeline Itself</h2>
+  <ul class="issue-list">
+    <li><span class="num">#8</span><strong>Implement frame stacking</strong> — mean/median stacking, docstring + doctest showing noise reduction</li>
+    <li><span class="num">#9</span><strong>Implement source detection</strong> — threshold + local-maxima, validate against 25 known stars</li>
+    <li><span class="num">#10</span><strong>Implement aperture photometry</strong> — sum flux per source, output as a DataFrame</li>
+    <li><span class="num">#11</span><strong>Implement image composition</strong> — contrast stretch, save a PNG "hero image"</li>
+    <li><span class="num">#12</span><strong>Real-sky bonus</strong> — <code>astroquery</code>/SkyView call, disk caching, <code>--real</code> flag</li>
+  </ul>
+  <div class="hl-box red spacer"><strong>Why the conflict is the point:</strong> <code>pipeline.py</code> and <code>README.md</code> get touched by nearly every task, on purpose. Real projects don't hand every team a private file.</div>
+</section>
+
+<section>
+  <h2>Fix Roles &amp; Workflow — Decide Now, Not Tomorrow</h2>
+  <div class="card-grid">
+    <div class="card" style="border-color:rgba(255,100,100,0.4);"><h4>👑 Maintainers</h4><p>2–3 people get <code>Maintain</code>, run Day 2's merge session.</p></div>
+    <div class="card" style="border-color:rgba(255,217,125,0.4);"><h4>👀 Reviewers</h4><p>Everyone reviews ≥1 other team's PR before Day 2.</p></div>
+    <div class="card"><h4>🌿 Branch naming</h4><p><code>issue-&lt;n&gt;-&lt;short-slug&gt;</code> so 6+ teams' branches don't collide.</p></div>
+    <div class="card"><h4>⚔️ Conflict ownership</h4><p>Agree now who resolves a conflict when two PRs touch the same lines.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Evening Work</h2>
+  <div class="hl-box">Each team, in their fork: implement the claimed task(s), organized however the team likes internally, then open a PR from the fork to upstream <code>main</code> before Day 2 morning.</div>
+  <div class="hl-box gold spacer">Not mandatory — see the retrospective for what happens if a team doesn't finish.</div>
+</section>
+
+<section>
+  <h2>Merge Session: Finished Teams First</h2>
+  <pre><code class="language-bash">gh pr checkout &lt;number&gt;        # fetch the fork's branch locally
+# read the diff, check CI is green, confirm the review bar
+gh pr merge &lt;number&gt; --merge</code></pre>
+  <div class="hl-box spacer">This is integration time, not more implementation time. Work down the PR list in the order PRs went green — not alphabetically or by claim order.</div>
+</section>
+
+<section>
+  <h2>Demo: Resolving a Real Merge Conflict</h2>
+  <pre><code class="language-bash">gh pr checkout &lt;number&gt;
+git fetch upstream main
+git merge upstream/main            # conflict markers appear
+# resolve <<<<<<< / ======= / >>>>>>> by hand
+git add pipeline.py
+git commit
+git push                           # conflict clears on GitHub</code></pre>
+  <div class="hl-box green spacer">Exactly Session 1's "Merging and conflicts" mechanic, showing up for real, between two teams' independent work.</div>
+</section>
+
+<section>
+  <h2>Finished Teams: Don't Sit Idle</h2>
+  <div class="hl-box green">Once your PR is merged, go help a team still working — debug, pair, get their branch mergeable. The room's total "stuck" count is what should be dropping, not just the merged-PR count.</div>
+</section>
+
+<section>
+  <h2>Wrap-Up: Merge What's Ready</h2>
+  <div class="hl-box gold">Keep merging finished PRs. <strong>If some teams haven't finished, that's fine — stop there.</strong> Don't extend the coding time to force a finish.</div>
+</section>
+
+<section>
+  <h2>Retrospective — "How Would This Play Out on a Real Project?"</h2>
+  <ul class="checklist">
+    <li><span class="chk-todo">?</span> What was the actual bottleneck — the code, or the Git/PR mechanics?</li>
+    <li><span class="chk-todo">?</span> Was your task's scope clear, or ambiguous once you started?</li>
+    <li><span class="chk-todo">?</span> Was the couple-hours estimate realistic?</li>
+    <li><span class="chk-todo">?</span> How did you split the work — did the split hold up?</li>
+    <li><span class="chk-todo">?</span> Out of time: cut scope, ask for an extension, reassign, or hand off with a note?</li>
+  </ul>
+  <div class="hl-box spacer">Capture 2–3 takeaways per team — the same questions a real retro asks after a real sprint.</div>
+</section>
+
+<section>
+  <h2>Going Further</h2>
+  <div class="card-grid">
+    <div class="card"><h4>📋 Backlog grooming</h4><p>Real backlogs get story-pointed, re-prioritized, split further. GitHub Projects → Jira/Linear.</p></div>
+    <div class="card"><h4>🛡️ Branch protection</h4><p>Enforce the review bar and CI-must-pass rule your team fixed by convention today.</p></div>
+  </div>
+</section>
+</section>
+
+<!-- ══════════════════════════════════════════════
+  CLOSING
+══════════════════════════════════════════════ -->
+<section>
+  <section class="section-slide">
+    <span class="section-num">·</span>
+    <h2>Wrap-Up</h2>
+  </section>
+
+  <section>
+    <h2>The Five Principles</h2>
+    <div class="card-grid-3">
+      <div class="card" style="border-color:rgba(126,207,255,0.35);"><h4>Version control</h4><p>Collaboration, not backup.</p></div>
+      <div class="card" style="border-color:rgba(255,217,125,0.35);"><h4>Reproducibility</h4><p>Same code + env + data → identical result.</p></div>
+      <div class="card" style="border-color:rgba(138,255,138,0.35);"><h4>Testing</h4><p>Design feedback, not a checkbox.</p></div>
+      <div class="card" style="border-color:rgba(200,150,255,0.35);"><h4>Documentation</h4><p>A deliverable, written for a specific reader.</p></div>
+      <div class="card" style="border-color:rgba(255,100,100,0.35);"><h4>Automation</h4><p>Mandatory by construction, not by discipline.</p></div>
+    </div>
+  </section>
+
+  <section class="title-slide" data-background-gradient="radial-gradient(ellipse at 50% 50%, #0a2a1a 0%, #0d1117 70%)">
+    <h1>Thank You!</h1>
+    <p style="font-size:0.8em; color:#aaa; margin-top:0.5em;">Now go break something — on purpose, in a fork.</p>
+  </section>
+</section>
+
+</div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<script src="reveal.js/dist/reveal.js"></script>
+<script src="reveal.js/dist/plugin/highlight.js"></script>
+<script src="reveal.js/dist/plugin/notes.js"></script>
+<script src="reveal.js/dist/plugin/zoom.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    themeVariables: {
+      background: '#0d1117',
+      primaryColor: '#1e3a5f',
+      primaryTextColor: '#7ecfff',
+      primaryBorderColor: '#7ecfff',
+      lineColor: '#555',
+      secondaryColor: '#1a2a1a',
+      tertiaryColor: '#2a1a2a',
+      edgeLabelBackground: '#0d1117',
+      nodeTextColor: '#ccc',
+    },
+    flowchart: { curve: 'basis', useMaxWidth: true },
+  });
+
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    controls: true,
+    progress: true,
+    center: false,
+    width: 1100,
+    height: 700,
+    margin: 0.04,
+    plugins: [ RevealHighlight, RevealNotes, RevealZoom ]
+  });
+
+  function renderMermaid() {
+    document.querySelectorAll('.mermaid:not([data-rendered])').forEach(el => {
+      el.setAttribute('data-rendered', '1');
+      const code = el.textContent;
+      const id = 'mermaid-' + Math.random().toString(36).slice(2);
+      mermaid.render(id, code).then(({ svg }) => {
+        el.innerHTML = svg;
+      });
+    });
+  }
+
+  Reveal.on('ready', renderMermaid);
+  Reveal.on('slidechanged', renderMermaid);
+</script>
+</body>
+</html>
