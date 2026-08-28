@@ -58,6 +58,8 @@ fork, branch, pull request, review, merge, conflict, retrospective.
 | **Day 2** | 9:00–11:15 | [Session 5 (2/3) — Merge & integration](5-data-challenge/) |
 | | 11:15–12:15 | [Session 5 (3/3) — Wrap-up & retrospective](5-data-challenge/) |
 
+Slides for all five sessions: **[jzoubian.github.io/software-development/slides/](https://jzoubian.github.io/software-development/slides/)**.
+
 ## What you'll actually do
 
 Every principle above gets practiced on the same running example: a
@@ -76,6 +78,7 @@ at once, for real, against a repo you didn't write.
 * [`3-documentation-testing/`](3-documentation-testing/) — docstrings, doctest, PyTest, mocking
 * [`4-workflow-control/`](4-workflow-control/) — pixi, GitHub Actions, CI/CD
 * [`5-data-challenge/`](5-data-challenge/) — the capstone workshop (schedule, team workflow, backlog)
+* [`slides/`](slides/) — the reveal.js deck for all five sessions, deployed at [jzoubian.github.io/software-development/slides/](https://jzoubian.github.io/software-development/slides/)
 
 ## License
 
