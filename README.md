@@ -50,7 +50,7 @@ fork, branch, pull request, review, merge, conflict, retrospective.
 | **Day 1** | 9:00–9:30 | Icebreaker & course overview |
 | | 9:30–10:30 | [Session 1 — Git & GitHub basics](1-software-development-basics/) |
 | | 10:45–12:15 | [Session 2 — Environment control](2-environment-control/) |
-| | 13:30–14:00 | (S)nap Talk — GitHub Copilot intro |
+| | 13:30–14:00 | [(S)nap Talk — GitHub Copilot intro](github-copilot/) |
 | | 14:00–15:45 | [Session 3 — Documentation & testing](3-documentation-testing/) |
 | | 15:45–16:45 | [Session 4 — Workflow control (CI/CD)](4-workflow-control/) |
 | | 16:45–17:45 | [Session 5 (1/3) — Data challenge tag-up](5-data-challenge/) |
@@ -75,6 +75,7 @@ at once, for real, against a repo you didn't write.
 
 * [`1-software-development-basics/`](1-software-development-basics/) — Git & GitHub, the collaborative workflow
 * [`2-environment-control/`](2-environment-control/) — Conda/Miniforge & Docker, reproducibility
+* [`github-copilot/`](github-copilot/) — (S)nap Talk: what an LLM/AI agent is, GitHub Copilot live demo
 * [`3-documentation-testing/`](3-documentation-testing/) — docstrings, doctest, PyTest, mocking
 * [`4-workflow-control/`](4-workflow-control/) — pixi, GitHub Actions, CI/CD
 * [`5-data-challenge/`](5-data-challenge/) — the capstone workshop (schedule, team workflow, backlog)
