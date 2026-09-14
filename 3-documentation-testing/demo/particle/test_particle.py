@@ -1,15 +1,15 @@
 from unittest import TestCase
+
 from particle import Particle
 
 
 class TestParticle(TestCase):
     def test_constructor(self):
-        # 1 - build a particle
-        # 2 - test its default properties
-        raise NotImplementedError("TODO: test the constructor")
+        p = Particle(pos_x=0.0, vx=2.0)
+        self.assertEqual(p.get_x(), 0.0)
+        self.assertEqual(p.get_vx(), 2.0)
 
     def test_move(self):
-        # 1 - build a particle
-        # 2 - move it with a dt
-        # 3 - check its new properties
-        raise NotImplementedError("TODO: test move()")
+        p = Particle(pos_x=0.0, vx=2.0)
+        p.move(dt=3.0)
+        self.assertEqual(p.get_x(), 6.0)
