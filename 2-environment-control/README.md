@@ -173,7 +173,7 @@ enough?** — usually the second.
   `conda-forge` instead — that's what "Miniforge" ships with by default.
 
 ```sh
-conda create -n myenv python=3.11 numpy pandas -c conda-forge  # create (+ packages)
+conda create -n myenv python numpy pandas -c conda-forge  # create (+ packages)
 conda activate myenv                             # activate
 conda install matplotlib -c conda-forge                         # add a package
 conda env export --no-builds > environment.yml   # share it (portable)

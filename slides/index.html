@@ -721,7 +721,7 @@ credentials.json</code></pre>
       <p>Anaconda's <code>defaults</code> channel is under a commercial license — many institutions restrict it. Use <strong><code>conda-forge</code></strong> instead (what Miniforge ships by default).</p>
     </div>
     <div class="card" style="padding:0; overflow:hidden;">
-<pre><code class="language-bash">conda create -n myenv python=3.11 numpy pandas
+<pre><code class="language-bash">conda create -n myenv python numpy pandas
 conda activate myenv
 conda install matplotlib
 conda env export --no-builds > environment.yml
@@ -772,7 +772,7 @@ docker run --rm astrolab</code></pre>
   <div class="card-grid">
     <div class="card" style="border-color:rgba(126,207,255,0.4);">
       <h4>1. Ad hoc environment</h4>
-      <pre><code class="language-bash">conda create -n astrolab python=3.11 \
+      <pre><code class="language-bash">conda create -n astrolab python \
     numpy matplotlib -y
 conda activate astrolab
 python -m astrolab.pipeline</code></pre>
