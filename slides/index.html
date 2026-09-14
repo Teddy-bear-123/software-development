@@ -1080,9 +1080,8 @@ backend.pread.assert_called_once_with(0, 5)</code></pre>
       </ul>
     </div>
     <div class="card" style="padding:0; overflow:hidden;">
-<pre><code class="language-bash">pixi init astrolab -c conda-forge
-cd astrolab
-pixi add numpy matplotlib
+<pre><code class="language-bash">pixi init -c conda-forge
+pixi add numpy matplotlib pytest
 pixi task add test "pytest"
 pixi run test
 pixi run python -m astrolab.pipeline</code></pre>

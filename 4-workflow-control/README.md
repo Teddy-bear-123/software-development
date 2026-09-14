@@ -93,9 +93,8 @@ someone remembering to update `environment.yml`.
   doesn't express that; you'd hand-maintain separate files
 
 ```sh
-pixi init astrolab -c conda-forge
-cd astrolab
-pixi add numpy matplotlib
+pixi init -c conda-forge
+pixi add numpy matplotlib pytest
 pixi task add test "pytest"
 pixi run test                  # everyone, and CI, run the same command
 pixi run python -m astrolab.pipeline
