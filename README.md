@@ -54,7 +54,6 @@ fork, branch, pull request, review, merge, conflict, retrospective.
 | | 14:00–15:45 | [Session 3 — Documentation & testing](3-documentation-testing/) |
 | | 15:45–16:45 | [Session 4 — Workflow control (CI/CD)](4-workflow-control/) |
 | | 16:45–17:45 | [Session 5 (1/3) — Data challenge tag-up](5-data-challenge/) |
-| *(evening, optional)* | | Teams implement their claimed backlog task |
 | **Day 2** | 9:00–11:15 | [Session 5 (2/3) — Merge & integration](5-data-challenge/) |
 | | 11:15–12:15 | [Session 5 (3/3) — Wrap-up & retrospective](5-data-challenge/) |
 

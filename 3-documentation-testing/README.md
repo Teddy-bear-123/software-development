@@ -348,13 +348,8 @@ That's "Why test early" (above) made concrete instead of theoretical.
 
 ## Exercises
 
-Backlog tasks for tonight's evening work (claimed at today's tag-up, see
-`5-data-challenge/README.md`), against the **data-challenge repo** this
-time (not the `demo/` folder above, which was just for practice). Each is
-independent — pick any subset, but expect to coordinate: exercise 1's
-tests land in the shared test layout exercise 2 sets up, and exercise 3's
-`README.md` edit sits next to whatever Session 2's environment-spec task
-and Session 4's CI task also add there.
+Backlog tasks for the data-challenge (see
+`5-data-challenge/README.md`).
 
 * **Add a pytest suite for `astrolab.synth`.** Currently the one fully
   implemented part of the pipeline has zero tests. Split within the team:

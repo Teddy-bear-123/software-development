@@ -248,9 +248,8 @@ yours, it's not part of the data-challenge repo.
 
 ## Exercises
 
-Backlog tasks for tonight's evening work (claimed at today's tag-up, see
-`5-data-challenge/README.md`), against the data-challenge repo this
-time. Each is independent — pick either or both.
+Backlog tasks for the data-challenge (see
+`5-data-challenge/README.md`).
 
 * **Add a GitHub Actions CI workflow to the data-challenge repo.** It
   currently has none. On every push and PR: check out, set up Python,

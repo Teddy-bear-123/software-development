@@ -50,7 +50,8 @@ jobs:
           }
 
           copy_img 1-software-development-basics \
-            fetch-merge-pull-push.svg git_flow_branching.png github_flow_branching.png
+            fetch-merge-pull-push.svg git_flow_branching.png github_flow_branching.png \
+            gitlab_flow_branching.png gitlab_flow_branching_v2.png
           copy_img 2-environment-control \
             computation-io.svg computation-chaotic.svg computation-data-code.svg \
             computation-data-code-env.svg computation-tool-levels.svg

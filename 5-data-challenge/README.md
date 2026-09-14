@@ -6,7 +6,6 @@ everything from Sessions 1–4 gets *applied*, not lectured, here
 | Part | When | What |
 |---|---|---|
 | 5 (1/3) — Tag-up | Day 1, 16:45–17:45 | Team formation, backlog walkthrough, fix roles & workflow |
-| — evening work — | Day 1 evening, optional | Teams fork, implement, open a PR |
 | 5 (2/3) — Merge session | Day 2, 9:00–11:15 | Integrate PRs into upstream, finished-first |
 | 5 (3/3) — Wrap-up | Day 2, 11:15–12:15 | Merge what's left, structured retrospective |
 
@@ -179,11 +178,9 @@ improvised tomorrow morning:
 * **Where to ask for help tonight**: pick one channel (course Slack/Discord,
   PR comments, whatever exists) and say it out loud.
 
-## Evening work (optional, Day 1 evening)
-
 Each team, in their fork: implement the claimed task(s), organized
 however the team likes internally, then open a PR from the fork to
-upstream `main` before Day 2 morning, following what got fixed above.
+upstream `main`, following what got fixed above.
 Not mandatory — see the retrospective in Part 3/3 for what happens if a
 team doesn't finish.
 

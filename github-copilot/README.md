@@ -11,24 +11,11 @@ is a snap talk, not a numbered session)
 * See GitHub Copilot used for real, at three levels of autonomy: inline
   chat/edit, agent mode in the editor, and an autonomous coding agent
   working from a GitHub issue
+* See the "Memory" ingredient made concrete: an `AGENTS.md` file that
+  encodes a project's conventions once so they persist across prompts,
+  sessions, and human/agent contributors alike
 * Carry one habit into [Session 3](../3-documentation-testing/) and the
   data challenge: AI output is a draft to review, not a verdict to trust
-
-## Timing (30 min)
-
-| min | what |
-|---|---|
-| 0–8 | Intro: what is an LLM, what is an AI agent |
-| 8–10 | What is GitHub Copilot, and the three levels of autonomy we'll see |
-| 10–17 | Demo step 1 — repo + initial prompt (**kick off step 3's issue at min ~15**, see tip below) |
-| 17–24 | Demo step 2 — Copilot in VS Code, agent mode, PR review |
-| 24–30 | Demo step 3 — review & merge the autonomous agent's PR |
-
-**Timing tip**: the autonomous coding agent in step 3 runs in the
-background and takes several minutes — assign the issue as soon as
-step 1's repo exists (don't wait until step 3 to open it), so its PR is
-actually ready to look at when you get there. If it isn't ready, have a
-pre-made PR from a dry run as a fallback.
 
 ## Intro: define a few words before using them
 
@@ -122,6 +109,37 @@ files, can run commands) — point out *what* it decided (file layout,
 integrator choice) without you specifying it. This is where planning +
 tools show up in practice, not just autocomplete.
 
+### Aside — give Copilot persistent memory with `AGENTS.md`
+
+The step 1 prompt set real ground rules — vanilla JS, no framework, no
+build step, keep it minimal — but they lived in one chat message. Once
+that conversation is gone, so are the rules; the next prompt (yours, a
+teammate's, or an unsupervised agent's) has no way to know them unless
+someone retypes them every time.
+
+1. At the repo root, create `AGENTS.md`:
+
+```markdown
+# Project conventions
+
+- Plain HTML, CSS, and vanilla JavaScript — no frameworks, no build step
+- Single shared gravity integrator function — extend it for more bodies,
+  don't fork it per feature
+- Keep it minimal and readable — this is a teaching demo, not production
+  code
+```
+
+2. Commit and push it straight to `main`.
+
+**Talking points**: this is the "Memory" ingredient from the intro
+diagram, made concrete — a plain Markdown file, not a special format,
+and it's converging into a real cross-tool standard: GitHub Copilot's
+coding agent reads it, so does Claude Code (as `CLAUDE.md`) and other
+assistants (`.github/copilot-instructions.md` is GitHub Copilot's older,
+repo-specific equivalent). It matters most for step 3: the autonomous
+agent works with nobody in the room to ask, so `AGENTS.md` is the only
+place it can pick up conventions nobody restated in that issue.
+
 ### Step 2 — Copilot in VS Code, extend to a 3-body system
 
 1. clone the repo, open it in VS Code, `git switch -c feature/three-body` 
@@ -150,7 +168,10 @@ PR → review) — Copilot is a participant in that workflow, not a
 replacement for it. This connects straight back to
 [Session 1](../1-software-development-basics/)'s roles: Copilot review
 comments are advisory, same as a human reviewer's — you still need a
-human with merge rights (a maintainer) to actually merge.
+human with merge rights (a maintainer) to actually merge. Also point
+out what's *not* in this prompt: no need to restate "vanilla JS, no
+framework" — that's already in `AGENTS.md` from the aside above, and
+Copilot still respects it.
 
 ### Step 3 — assign a GitHub issue to the autonomous coding agent
 
@@ -195,7 +216,7 @@ own.
   or test is a claim about behavior, not proof; you review it exactly
   like a teammate's PR, using the same roles and workflow from
   [Session 1](../1-software-development-basics/#roles-developer-reviewer-maintainer)
-* Feel free to use it during the data challenge evening work — the
+* Feel free to use it during the data challenge — the
   same "review before you trust it" rule applies there too
 * **Today's example was chosen to be simple — real tasks usually
   aren't.** A real project's tasks are bigger and messier than "add a

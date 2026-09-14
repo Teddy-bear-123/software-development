@@ -117,7 +117,7 @@
     /* ── Mermaid diagrams ── */
     .mermaid { margin: 0.6em auto; font-size: 0.78em; }
     .mermaid svg { max-width: 100%; max-height: 420px; }
-    .mermaid-fill svg { max-height: none !important; width: 100% !important; height: auto !important; }
+    .mermaid-fill svg { max-height: none !important; max-width: none !important; width: 100% !important; height: auto !important; }
 
     /* ── Table ── */
     .data-table { width: 100%; border-collapse: collapse; font-size: 0.68em; margin-top: 0.5em; }
@@ -228,7 +228,6 @@
     <li><span class="dot dot-purple">6</span><div class="content"><strong>15:45–16:45</strong> — Session 4: Workflow control (CI/CD) <span>60 min</span></div></li>
     <li><span class="dot dot-red">7</span><div class="content"><strong>16:45–17:45</strong> — Session 5 (1/3): Data challenge tag-up</div></li>
   </ul>
-  <div class="milestone"><strong>Evening (optional):</strong> teams fork, implement their claimed backlog task, open a PR.</div>
 </section>
 
 <section>
@@ -285,22 +284,42 @@
 </section>
 
 <section>
-  <h2>Local → Centralized → Distributed</h2>
-  <div class="card-grid-3">
-    <div class="card" style="border-color:rgba(126,207,255,0.4);">
-      <h4>💾 Local</h4>
-      <p>A "database" of changes on one machine.</p>
-      <p><em>Now — how to share it?</em></p>
+  <h2>💾 Local Version Control</h2>
+  <div class="img-card" style="max-width:420px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/local.png" alt="Local version control">
+  </div>
+  <ul class="spacer" style="font-size:0.8em;">
+    <li>A "database" of changes, on one machine</li>
+  </ul>
+  <div class="hl-box spacer">Now — how do you share it with someone else?</div>
+</section>
+
+<section>
+  <h2>🖥️ Centralized Version Control</h2>
+  <div class="img-card" style="max-width:480px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/centralized.png" alt="Centralized version control">
+  </div>
+  <ul class="spacer" style="font-size:0.8em;">
+    <li>One central server stores the "database"</li>
+    <li>Clients check out files from the server</li>
+    <li>CVS, Subversion…</li>
+  </ul>
+  <div class="hl-box gold spacer">What if the server is down?</div>
+</section>
+
+<section>
+  <h2>🌐 Distributed Version Control</h2>
+  <div class="card-grid" style="align-items:center;">
+    <div class="img-card">
+      <img src="https://git-scm.com/book/en/v2/images/distributed.png" alt="Distributed version control">
     </div>
-    <div class="card" style="border-color:rgba(255,217,125,0.4);">
-      <h4>🖥️ Centralized</h4>
-      <p>One server, clients check out files. CVS, Subversion…</p>
-      <p><em>What if the server is down?</em></p>
-    </div>
-    <div class="card" style="border-color:rgba(138,255,138,0.4);">
-      <h4>🌐 Distributed</h4>
-      <p>Every client has the full "database." Works offline, shares peer-to-peer.</p>
-      <p><em>Git, Mercurial…</em></p>
+    <div>
+      <ul style="font-size:0.8em;">
+        <li>Every client has a full copy of the "database"</li>
+        <li>Clients can work offline</li>
+        <li>Clients can share changes directly with each other</li>
+      </ul>
+      <div class="hl-box green spacer">Git, Mercurial…</div>
     </div>
   </div>
 </section>
@@ -319,7 +338,10 @@
 
 <section>
   <h2>Everyday Commands</h2>
-  <pre><code class="language-bash">git init                  # start a new repo
+  <div class="img-card" style="max-width:800px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/lifecycle.png" alt="File status lifecycle">
+  </div>
+  <pre class="spacer"><code class="language-bash">git init                  # start a new repo
 git status                # what's changed, what's staged
 git add &lt;path&gt;            # stage a change
 git commit -m "message"   # record staged changes
@@ -345,9 +367,33 @@ git switch feature-x      # move to it
 git switch -c feature-y   # create + move</code></pre>
     </div>
   </div>
-  <div class="img-card spacer" style="max-width:520px; margin-top:0.6em;">
+</section>
+
+<section>
+  <h2><code>git branch</code> — Create a Branch</h2>
+  <div class="img-card" style="max-width:520px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/head-to-master.png" alt="Creating a branch">
+  </div>
+  <pre class="spacer"><code class="language-bash">$ git branch testing</code></pre>
+  <div class="hl-box spacer">A new pointer, <code>testing</code>, is created — <code>HEAD</code> still points to <code>master</code>.</div>
+</section>
+
+<section>
+  <h2><code>git switch</code> — Move the Pointer</h2>
+  <div class="img-card" style="max-width:520px; margin:0 auto;">
     <img src="https://git-scm.com/book/en/v2/images/head-to-testing.png" alt="Checkout a branch">
   </div>
+  <pre class="spacer"><code class="language-bash">$ git switch testing</code></pre>
+  <div class="hl-box gold spacer"><code>HEAD</code> now points to <code>testing</code> — the working directory updates to match.</div>
+</section>
+
+<section>
+  <h2><code>git commit</code> — Advance the Branch</h2>
+  <div class="img-card" style="max-width:520px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/advance-testing.png" alt="Committing on a branch">
+  </div>
+  <pre class="spacer"><code class="language-bash">$ git commit -a -m "made a change"</code></pre>
+  <div class="hl-box green spacer">The <code>testing</code> branch moves forward. <code>master</code> is untouched — <code>HEAD</code> follows whichever branch is checked out.</div>
 </section>
 
 <section>
@@ -394,22 +440,28 @@ git rebase master
 git checkout master
 git merge experiment</code></pre>
     </div>
+
+  <div class="img-card" style="max-width:480px; margin:0 auto;">
+    <img src="https://git-scm.com/book/en/v2/images/basic-merging-2.png" alt="Merging branches">
   </div>
-  <div class="img-card spacer" style="max-width:480px; margin-top:0.6em;">
+  <div class="img-card spacer" style="max-width:480px; margin:0 auto;">
     <img src="https://git-scm.com/book/en/v2/images/basic-rebase-4.png" alt="Rebasing then merge">
+  </div>
   </div>
 </section>
 
 <section>
   <h2>Remotes: Fetch, Merge, Pull, Push</h2>
-  <div class="img-card" style="max-width:560px; margin:0 auto;">
-    <img src="img/1-software-development-basics/fetch-merge-pull-push.svg" alt="Remote repository, local repository, working copy: fetch, merge, and pull">
-  </div>
-  <div class="card-grid spacer">
-    <div class="card"><h4><code>git fetch</code></h4><p>Downloads what's new into your local repo — working copy unchanged yet.</p></div>
-    <div class="card"><h4><code>git merge</code></h4><p>Combines that into your working copy — same merge as any other.</p></div>
-    <div class="card"><h4><code>git pull</code></h4><p>Both in one command — a conflict can appear with no separate warning step.</p></div>
-    <div class="card"><h4><code>git push</code></h4><p>The only one going the other direction.</p></div>
+  <div class="card-grid" style="align-items:center;">
+    <div class="img-card">
+      <img src="img/1-software-development-basics/fetch-merge-pull-push.svg" alt="Remote repository, local repository, working copy: fetch, merge, and pull">
+    </div>
+    <div class="card-grid">
+      <div class="card"><h4><code>git fetch</code></h4><p>Downloads what's new into your local repo — working copy unchanged yet.</p></div>
+      <div class="card"><h4><code>git merge</code></h4><p>Combines that into your working copy — same merge as any other.</p></div>
+      <div class="card"><h4><code>git pull</code></h4><p>Both in one command — a conflict can appear with no separate warning step.</p></div>
+      <div class="card"><h4><code>git push</code></h4><p>The only one going the other direction.</p></div>
+    </div>
   </div>
 </section>
 
@@ -493,14 +545,49 @@ credentials.json</code></pre>
 
 <section>
   <h2>Branching Strategies</h2>
-  <div class="card-grid">
-    <div class="card" style="padding:6px;"><div class="img-card"><img src="img/1-software-development-basics/git_flow_branching.png" alt="Gitflow"></div><p class="center" style="font-size:0.7em; margin-top:4px;">Gitflow — most complex</p></div>
-    <div class="card" style="padding:6px;"><div class="img-card"><img src="img/1-software-development-basics/github_flow_branching.png" alt="GitHub flow"></div><p class="center" style="font-size:0.7em; margin-top:4px;">GitHub flow — simplest</p></div>
-  </div>
+  <p style="font-size:0.8em; color:#bbb;">A few common conventions for organizing branches on a shared repo:</p>
+  <ul class="spacer" style="font-size:0.8em;">
+    <li>Gitflow — most complex</li>
+    <li>GitHub flow — simplest</li>
+    <li>GitLab flow — most common?</li>
+    <li>GitLab flow, alternative</li>
+  </ul>
 </section>
 
 <section>
-  <h2>The Workflow This Course Uses: GitHub Flow</h2>
+  <h2>Gitflow</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="img/1-software-development-basics/git_flow_branching.png" alt="Gitflow">
+  </div>
+  <div class="hl-box red spacer">The most complex: long-lived <code>develop</code>, <code>release</code>, and <code>hotfix</code> branches alongside <code>main</code>.</div>
+</section>
+
+<section>
+  <h2>GitHub Flow</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="img/1-software-development-basics/github_flow_branching.png" alt="GitHub flow">
+  </div>
+  <div class="hl-box green spacer">The simplest: <code>main</code> is always deployable, every change is a short-lived branch off it. What this course uses.</div>
+</section>
+
+<section>
+  <h2>GitLab Flow</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="img/1-software-development-basics/gitlab_flow_branching.png" alt="GitLab flow">
+  </div>
+  <div class="hl-box gold spacer">Possibly the most common in practice: GitHub flow plus environment branches (e.g. <code>staging</code>, <code>production</code>).</div>
+</section>
+
+<section>
+  <h2>GitLab Flow — Alternative</h2>
+  <div class="img-card" style="max-width:640px; margin:0 auto;">
+    <img src="img/1-software-development-basics/gitlab_flow_branching_v2.png" alt="GitLab flow, alternative">
+  </div>
+  <div class="hl-box gold spacer">A variant using release branches instead of environment branches.</div>
+</section>
+
+<section>
+  <h2>Workflow the data challenge: GitHub Flow</h2>
   <ul class="checklist">
     <li><span class="chk-ok">✓</span> <code>main</code> is always deployable</li>
     <li><span class="chk-ok">✓</span> Every change happens on a short-lived branch off <code>main</code></li>
@@ -566,7 +653,7 @@ credentials.json</code></pre>
 
 <section>
   <h2>What's a Computation, Really?</h2>
-  <div class="img-card" style="max-width:560px; margin:0 auto;">
+  <div class="img-card" style="max-width:800px; margin:0 auto;">
     <img src="img/2-environment-control/computation-io.svg" alt="A computation is a mapping from input bits to output bits">
   </div>
   <div class="hl-box spacer">A computation is a mapping from input bits to output bits — "meaning" is a human overlay, not something the computer knows.</div>
@@ -574,17 +661,24 @@ credentials.json</code></pre>
 
 <section>
   <h2>Nothing Here Is Smooth</h2>
-  <div class="img-card" style="max-width:560px; margin:0 auto;">
+  <div class="img-card" style="max-width:800px; margin:0 auto;">
     <img src="img/2-environment-control/computation-chaotic.svg" alt="A 1-bit change in input can cause an outsized change in output">
   </div>
   <div class="hl-box red spacer">A 1-bit change in the input can cause an outsized change in the output. "I used the same code" ≠ "I got the same result."</div>
 </section>
 
 <section>
-  <h2>Data, Code… and Environment</h2>
-  <div class="card-grid">
-    <div class="img-card"><img src="img/2-environment-control/computation-data-code.svg" alt="Split input into data and code"></div>
-    <div class="img-card"><img src="img/2-environment-control/computation-data-code-env.svg" alt="A third, usually invisible input: the environment"></div>
+  <h2>Data and Code</h2>
+  <div class="img-card" style="max-width:560px; margin:0 auto;">
+    <img src="img/2-environment-control/computation-data-code.svg" alt="Split input into data and code">
+  </div>
+  <div class="hl-box spacer">Split the input side in two: what varies run to run is <strong>data</strong>, what should stay fixed is <strong>code</strong> — but code is just more bits going into the same box, nothing structurally different about it.</div>
+</section>
+
+<section>
+  <h2>…and Environment</h2>
+  <div class="img-card" style="max-width:560px; margin:0 auto;">
+    <img src="img/2-environment-control/computation-data-code-env.svg" alt="A third, usually invisible input: the environment">
   </div>
   <div class="hl-box gold spacer">A third, usually invisible input: the <strong>environment</strong> (interpreter, libraries, OS, hardware) — the whole reason this session exists.</div>
 </section>
@@ -602,7 +696,7 @@ credentials.json</code></pre>
 
 <section>
   <h2>How to Manage Environments?</h2>
-  <div class="img-card" style="max-width:420px; margin:0 auto;">
+  <div class="img-card" style="max-width:680px; margin:0 auto;">
     <img src="img/2-environment-control/computation-tool-levels.svg" alt="Tool levels for managing environments">
   </div>
 </section>
@@ -1123,7 +1217,6 @@ jobs:
   <h2>Three Parts, Two Days</h2>
   <ul class="timeline">
     <li><span class="dot dot-red">1</span><div class="content"><strong>5 (1/3) Tag-up</strong> <span>Day 1, 16:45–17:45</span> — team formation, backlog walkthrough, fix roles &amp; workflow</div></li>
-    <li><span class="dot dot-gold">✱</span><div class="content"><strong>Evening work</strong> <span>optional</span> — teams fork, implement, open a PR</div></li>
     <li><span class="dot dot-red">2</span><div class="content"><strong>5 (2/3) Merge session</strong> <span>Day 2, 9:00–11:15</span> — integrate PRs, finished-first</div></li>
     <li><span class="dot dot-red">3</span><div class="content"><strong>5 (3/3) Wrap-up</strong> <span>Day 2, 11:15–12:15</span> — merge what's left, structured retrospective</div></li>
   </ul>
@@ -1187,9 +1280,8 @@ gh pr create --repo jzoubian/software-development_data-challenge \
 </section>
 
 <section>
-  <h2>Evening Work</h2>
-  <div class="hl-box">Each team, in their fork: implement the claimed task(s), organized however the team likes internally, then open a PR from the fork to upstream <code>main</code> before Day 2 morning.</div>
-  <div class="hl-box gold spacer">Not mandatory — see the retrospective for what happens if a team doesn't finish.</div>
+  <h2>Implement the tasks</h2>
+  <div class="hl-box">Each team, in their fork: implement the claimed task(s), organized however the team likes internally, then open a PR from the fork to upstream <code>main</code>.</div>
 </section>
 
 <section>

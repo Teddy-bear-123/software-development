@@ -128,6 +128,42 @@ steep learning curve, smaller ecosystem, out of scope for this course.
 **Do you actually need bitwise reproducibility, or is replicability
 enough?** — usually the second.
 
+### Python environment managers
+
+**Two questions to ask before picking a tool:**
+
+* **What layer does it manage?**
+  * PyPI-family (`pip`, `uv`, `poetry` — usually paired with `pyenv` for
+    the interpreter itself) manages Python *packages* only. It needs a
+    Python installation to already exist (`pyenv` can get you one without
+    admin rights; a system-wide install may need `sudo`). Native
+    C/Fortran libraries are **not** managed — they must already be on the
+    system, which is exactly where "works on my machine" bites: wrong
+    BLAS version, missing compiler, mismatched ABI/build flags.
+  * Conda-family (`conda`, `mamba`, `micromamba`, `pixi`) manages the
+    Python interpreter *and* native libraries, via `conda-forge` — one
+    tool, one lock, both layers covered.
+* **Where does the environment live?**
+  * Central, named location: `conda` (`~/miniforge3/envs/<name>`),
+    `pip`+`venv` (wherever you point `venv`, typically outside the repo)
+    — activate it by name/path from anywhere.
+  * Inside the project itself: `uv` (`.venv/`), `pixi` (`.pixi/`) — `cd`
+    into the repo and the tool finds it, no separate activate step
+    (`uv run ...`, `pixi run ...`).
+
+| Tool | PyPI repo | Conda repo | Specificity |
+|---|---|---|---|
+| `pip` | ✅ | ❌ | Bundled with Python; no isolation of its own (pairs with `venv`) |
+| `conda` | ❌ | ✅ | Manages the interpreter + native libs, not just packages; can shell out to `pip` for PyPI-only packages |
+| `uv` | ✅ | ❌ | Rust-based, drop-in `pip`+`venv` replacement; very fast resolver; per-project `.venv` + lock file; can also install Python itself |
+| `poetry` | ✅ | ❌ | Project/publishing-focused: `pyproject.toml` + lock file, per-project env, opinionated resolver |
+| `mamba` | ❌ | ✅ | Drop-in `conda` reimplementation (C++ solver) — same channels, much faster solving |
+| `micromamba` | ❌ | ✅ | Single static binary, no base env — built for CI/Docker images |
+| `pixi` | ✅ | ✅ | Per-project (`.pixi/`); mixes `conda-forge` *and* PyPI packages in one lock file; built-in task runner |
+
+* Rough popularity order above (most → least common in this kind of
+  work) — but `uv` and `pixi` are the fastest-moving of the set right now.
+
 ### Conda / Miniforge
 
 * Package *and* environment manager — not Python-only, any language
@@ -137,9 +173,9 @@ enough?** — usually the second.
   `conda-forge` instead — that's what "Miniforge" ships with by default.
 
 ```sh
-conda create -n myenv python=3.11 numpy pandas   # create (+ packages)
+conda create -n myenv python=3.11 numpy pandas -c conda-forge  # create (+ packages)
 conda activate myenv                             # activate
-conda install matplotlib                         # add a package
+conda install matplotlib -c conda-forge                         # add a package
 conda env export --no-builds > environment.yml   # share it (portable)
 conda env create -f environment.yml -n myenv2    # recreate it elsewhere
 conda env remove -n myenv                        # clean up
@@ -259,8 +295,8 @@ identically on any machine with Docker, no local Python setup at all.
 
 ## Exercises
 
-Backlog tasks for tonight's evening work (claimed at today's tag-up, see
-`5-data-challenge/README.md`). Each is independent — pick either or both.
+Backlog tasks for the data-challenge (see
+`5-data-challenge/README.md`).
 
 * **Add a Conda/Miniforge `environment.yml` for the data-challenge repo.**
   It currently has none (the demo above worked around that). Pin with
